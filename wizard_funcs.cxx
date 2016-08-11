@@ -22,6 +22,7 @@
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
+#include "G2U.h"
 #endif
 
 #include <string>
@@ -962,8 +963,13 @@ Wizard::prev_cb()
 
 void
 Wizard::defaults_cb()
-{
-    int r = fl_choice( _("About to reset current parameters"), _("Abort"), _("Reset"), 0 );
+{   char* pGB = "要重置当前参数";
+	char* UTF8 = G2U(pGB);
+	char* pGB1 = "中止";
+	char* UTF81 = G2U(pGB1);
+	char* pGB2 = "重置";
+	char* UTF82 = G2U(pGB2);
+    int r = fl_choice( UTF8,UTF81 ,UTF82 , 0 );  // _("About to reset current parameters"),  _("Abort"), _("Reset")
     if (!r)
         return;
     if (adv == 0)
@@ -2479,7 +2485,9 @@ Wizard::save_basic_options( Fl_Preferences &p )
 void
 Wizard::load_preferences_cb()
 {
-    char *filename = fl_file_chooser( _("Load settings from..."), "*.fgrun", "settings.fgrun" );
+	char* pGB = "负载设置";
+	char* UTF8 = G2U(pGB);
+    char *filename = fl_file_chooser(UTF8 , "*.fgrun", "settings.fgrun" );  //_("Load settings from...")
     if ( filename )
     {
         win->cursor( FL_CURSOR_WAIT );
@@ -2559,14 +2567,22 @@ Wizard::load_preferences_cb()
 void
 Wizard::save_preferences_cb()
 {
+	char* pGB = "保存设置";
+	char* UTF8 = G2U(pGB);
+	char* pGB1 = "文件名\"%s\"已经存在";
+	char* UTF81 = G2U(pGB1);
+	char* pGB2 = "覆盖";
+	char* UTF82 = G2U(pGB2);
+	char* pGB3 = "不覆盖";
+	char* UTF83 = G2U(pGB3);
     char *filename = 0;
     for (;;)
     {
-        filename = fl_file_chooser( _("Save settings as..."), "*.fgrun", "settings.fgrun" );
+        filename = fl_file_chooser( UTF8, "*.fgrun", "settings.fgrun" );  //_("Save settings as...")
         struct stat stat_info;
         if ( !filename ||
                 stat( filename, &stat_info ) != 0 ||
-                fl_choice( _("Filename \"%s\" already exists."), _("Overwrite"), _("Don't overwrite"), 0, fl_filename_name( filename ) ) == 0 )
+                fl_choice(UTF81,UTF82,UTF83,0,fl_filename_name( filename ) ) == 0 )  //_("Filename \"%s\" already exists."),_("Overwrite"), _("Don't overwrite")
         {
             break;
         }

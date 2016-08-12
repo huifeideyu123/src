@@ -1,5 +1,4 @@
-
-	// advanced_funcs.cxx -- Advanced UI functions.
+// advanced_funcs.cxx -- Advanced UI functions.
 //
 // Written by Bernie Bright, started Nov 2003.
 //
@@ -34,6 +33,7 @@
 #include "advanced.h"
 #include "i18n.h"
 #include "util.h"
+//#include "wizard.h"
 #include "G2U.h"
 //#include <afxdisp.h>        // MFC Automation classes
 #include <tchar.h>
@@ -158,8 +158,8 @@ Fl_Menu_Item Advanced::menu_anti_aliasing[] = {
 void
 Advanced::init()
 {
-	char* pGB = "一般";
-	char* UTF8 = G2U(pGB);
+	char* pGB;
+	char* pUTF8;
     for( int i = 0; i < MAX_CLOUD_LAYERS; ++i)
     {
         cloud_elevation[i] = 0;
@@ -218,55 +218,55 @@ Advanced::init()
     if ( io_generic_file->size() )
         io_generic_file->value(0);
 
-    set_choice( fdm, "automatic selection" );//自动选择
+    set_choice( fdm, "automatic selection" );//好像不能改（set_choice这个函数）
     set_choice( log_level, "alert" );
 
-    page_list->add(UTF8); //_("General")
+
+	pGB = "常规";
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8); //_("General")
 	pGB = "特性";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);   //  _("Features")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);  //_("Features")
 	pGB = "飞行模式";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);  //_("Flight Model")
-
-
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);//_("Flight Model")
 	pGB = "冻结";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);  //_("Freeze")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8); //_("Freeze")
 	pGB = "初始位置";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8); //_("Initial Position")
-	pGB = "呈现";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);  //_("Rendering")
-    pGB = "时间";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8); //_("Time")  
-	
-	pGB = "Net 网络";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);//_("Initial Position")
+	pGB = "渲染";
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8); //_("Rendering")
+	pGB = "时间";
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);  //_("Time")
+	pGB = "NET 网络";
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);
 	pGB = "输入/输出";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);  //_("Input/Output")
-	pGB = "航空电子设备";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8); //_("Avionics")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);  //_("Input/Output")
+	pGB = "设备";
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);//_("Avionics")
 	pGB = "属性";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8); //_("Properties")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);//_("Properties")
 	pGB = "调试";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);  //_("Debugging")  
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);  //_("Debugging")
 	pGB = "环境";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);  // _("Environment")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);//_("Environment")
 	pGB = "天气";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8); //_("Weather")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);  //_("Weather")
 	pGB = "云";
-	UTF8 = G2U(pGB);
-    page_list->add(UTF8);   //_("Clouds")
+	pUTF8 = G2U(pGB);
+    page_list->add(pUTF8);//_("Clouds")
 
     main_window->size_range( 640, 480 );
     page_list->select(1);
@@ -276,9 +276,7 @@ Advanced::init()
 void
 Advanced::fg_browser_cb()
 {
-	char* pGB = "选择浏览器";
-	char* UTF8 = G2U(pGB);
-    char* p = fl_file_chooser(UTF8 , 0, browser->value(), 0);  //_("Select browser")
+    char* p = fl_file_chooser(_("Select browser"), 0, browser->value(), 0);
     if (p != 0)
         browser->value( p );
 }
@@ -333,7 +331,7 @@ Advanced::cloud_layer_cb()
 void
 Advanced::fg_config_cb()
 {
-    char* p = fl_file_chooser( _("Select a preferences file"),   //暂时没改
+    char* p = fl_file_chooser( _("Select a preferences file"),
                                _("XML Files(*.xml)"),
                                config->value(), 0 );
     if (p != 0)

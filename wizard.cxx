@@ -646,7 +646,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
 		  show_3d_preview = new Fl_Check_Button(780, 0, 17, 25,pUTF8);
           show_3d_preview->down_box(FL_DOWN_BOX);
           show_3d_preview->labelsize(12);
-          show_3d_preview->callback((Fl_Callback*)cb_show_3d_preview);
+          //show_3d_preview->callback((Fl_Callback*)cb_show_3d_preview);
           show_3d_preview->align(Fl_Align(FL_ALIGN_LEFT));
         } // Fl_Check_Button* show_3d_preview
         { Fl_Tile* o = new Fl_Tile(0, 25, 795, 465);
@@ -696,14 +696,14 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         } // Fl_Tile* o
         { Fl_Group* o = new Fl_Group(5, 490, 790, 65);
           o->box(FL_DOWN_BOX);
-          { pGB = "状态:";
-			pUTF8 = G2U(pGB);
-			aircraft_status = new Fl_Output(115, 495, 135, 25,pUTF8);
+          { //pGB = "状态:";
+			//pUTF8 = G2U(pGB);
+		//	aircraft_status = new Fl_Output(115, 495, 135, 25,pUTF8);
           } // Fl_Output* aircraft_status
-          { pGB = "作者(年代):";
-			pUTF8 = G2U(pGB);
-			aircraft_author = new Fl_Output(385, 495, 305, 25,pUTF8);
-            Fl_Group::current()->resizable(aircraft_author);
+          { //pGB = "作者(年代):";
+			//pUTF8 = G2U(pGB);
+			//aircraft_author = new Fl_Output(385, 495, 305, 25,pUTF8);
+            //Fl_Group::current()->resizable(aircraft_author);
           } // Fl_Output* aircraft_author
           { pGB = "查看器";
 			pUTF8 = G2U(pGB);

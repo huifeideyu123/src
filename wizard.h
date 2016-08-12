@@ -104,8 +104,8 @@ private:
   void cb_aircraft_i(Fl_Browser*, void*);
   static void cb_aircraft(Fl_Browser*, void*);
   Fl_OSG *preview;
-  Fl_Output *aircraft_status;
-  Fl_Output *aircraft_author;
+  //Fl_Output *aircraft_status;
+  //Fl_Output *aircraft_author;
   Fl_Button *start_viewer;
   void cb_start_viewer_i(Fl_Button*, void*);
   static void cb_start_viewer(Fl_Button*, void*);

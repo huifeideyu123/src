@@ -208,10 +208,10 @@ void Wizard::cb_game_mode(Fl_Check_Button* o, void* v) {
 }
 
 void Wizard::cb_horizon_effect_i(Fl_Check_Button*, void*) {
-  horizon_effect_cb();
+//  horizon_effect_cb();
 }
 void Wizard::cb_horizon_effect(Fl_Check_Button* o, void* v) {
-  ((Wizard*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_horizon_effect_i(o,v);
+  //((Wizard*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_horizon_effect_i(o,v);
 }
 
 void Wizard::cb_enhanced_lighting_i(Fl_Check_Button*, void*) {
@@ -696,21 +696,24 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         } // Fl_Tile* o
         { Fl_Group* o = new Fl_Group(5, 490, 790, 65);
           o->box(FL_DOWN_BOX);
-          { //pGB = "状态:";
-			//pUTF8 = G2U(pGB);
+          { 
+			  //pGB = "状态:";
+		//	pUTF8 = G2U(pGB);
 		//	aircraft_status = new Fl_Output(115, 495, 135, 25,pUTF8);
           } // Fl_Output* aircraft_status
-          { //pGB = "作者(年代):";
+          {
+			  //pGB = "作者(年代):";
 			//pUTF8 = G2U(pGB);
 			//aircraft_author = new Fl_Output(385, 495, 305, 25,pUTF8);
-            //Fl_Group::current()->resizable(aircraft_author);
+           // Fl_Group::current()->resizable(aircraft_author);
           } // Fl_Output* aircraft_author
-          { pGB = "查看器";
-			pUTF8 = G2U(pGB);
-			start_viewer = new Fl_Button(695, 495, 95, 25,pUTF8);
-            start_viewer->callback((Fl_Callback*)cb_start_viewer);
+          {
+			  //pGB = "查看器";
+			//pUTF8 = G2U(pGB);
+			//start_viewer = new Fl_Button(695, 495, 95, 25,pUTF8);
+            //start_viewer->callback((Fl_Callback*)cb_start_viewer);
           } // Fl_Button* start_viewer
-          { pGB = "地点:";
+          { pGB = "位置:";
 			pUTF8 = G2U(pGB);
 			aircraft_location = new Fl_Output(115, 525, 575, 25,pUTF8);
           } // Fl_Output* aircraft_location
@@ -718,13 +721,13 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         } // Fl_Group* o
         page[1]->end();
       } // Fl_Group* page[1]
-      { pGB = "选择一个位置";
+      { pGB = "训练计划";
 		pUTF8 = G2U(pGB);
 		page[2] = new Fl_Group(0, 0, 800, 560, pUTF8);
         page[2]->labelfont(1);
         page[2]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         page[2]->hide();
-        { pGB = "所有的机场";
+        { pGB = "队形设置";
 		  pUTF8 = G2U(pGB);
 		  show_all_apt = new Fl_Round_Button(5, 20, 100, 15, pUTF8);
           show_all_apt->tooltip(_("Display all airports"));
@@ -732,7 +735,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           show_all_apt->down_box(FL_ROUND_DOWN_BOX);
           show_all_apt->callback((Fl_Callback*)cb_show_all_apt);
         } // Fl_Round_Button* show_all_apt
-        { pGB = "安装了机场";
+        { pGB = "训练计划";
 		  pUTF8 = G2U(pGB);
 		  show_installed_apt = new Fl_Round_Button(5, 40, 100, 15,pUTF8);
           show_installed_apt->tooltip(_("Display only installed airports"));
@@ -754,18 +757,18 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           Fl_Group::current()->resizable(airports_);
         } // AirportBrowser* airports_
         { Fl_Group* o = new Fl_Group(5, 505, 790, 50);
-          { pGB = "运营商运维";
+          { pGB = "具体位置";
 		    pUTF8 = G2U(pGB);
 			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);
 			//carrier_group = new Fl_Group(5, 505, 635, 50, _("Carrier Ops"));  //翻译不太正确
             carrier_group->box(FL_ENGRAVED_FRAME);
             carrier_group->labelfont(1);
             carrier_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-            { pGB = "航空公司:";
+            { pGB = "经度:";
 		      pUTF8 = G2U(pGB);
 			  carrier_ = new Fl_Input(145, 520, 175, 25, pUTF8);
             } // Fl_Input* carrier_
-            { pGB = "公园pos:";
+            { pGB = "纬度:";
 		      pUTF8 = G2U(pGB);
 			  parkpos_ = new Fl_Input(460, 520, 175, 25,pUTF8);
 			 // parkpos_ = new Fl_Input(460, 520, 175, 25, _("Park pos :"));
@@ -781,10 +784,151 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         } // Fl_Group* o
         page[2]->end();
       } // Fl_Group* page[2]
+
+
+	  //page[21]
+	        { pGB = "选择一个位置";
+		pUTF8 = G2U(pGB);
+		page[21] = new Fl_Group(0, 0, 800, 560, pUTF8);
+        page[21]->labelfont(1);
+        page[21]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        page[21]->hide();
+        { pGB = "起飞机场";
+		  pUTF8 = G2U(pGB);
+		  show_all_apt = new Fl_Round_Button(5, 20, 100, 15, pUTF8);
+          show_all_apt->tooltip(_("Display all airports"));
+          show_all_apt->type(102);
+          show_all_apt->down_box(FL_ROUND_DOWN_BOX);
+          show_all_apt->callback((Fl_Callback*)cb_show_all_apt);
+        } // Fl_Round_Button* show_all_apt
+        { pGB = "跳伞目的地";
+		  pUTF8 = G2U(pGB);
+		  show_installed_apt = new Fl_Round_Button(5, 40, 100, 15,pUTF8);
+          show_installed_apt->tooltip(_("Display only installed airports"));
+          show_installed_apt->type(102);
+          show_installed_apt->down_box(FL_ROUND_DOWN_BOX);
+          show_installed_apt->value(1);
+          show_installed_apt->callback((Fl_Callback*)cb_show_installed_apt);
+        } // Fl_Round_Button* show_installed_apt
+        { airports_ = new AirportBrowser(5, 55, 790, 415);
+          airports_->box(FL_NO_BOX);
+          airports_->color(FL_BACKGROUND_COLOR);
+          airports_->selection_color(FL_BACKGROUND_COLOR);
+          airports_->labeltype(FL_NORMAL_LABEL);
+          airports_->labelfont(0);
+          airports_->labelsize(14);
+          airports_->labelcolor(FL_FOREGROUND_COLOR);
+          airports_->align(Fl_Align(FL_ALIGN_CENTER));
+          airports_->when(FL_WHEN_RELEASE);
+          Fl_Group::current()->resizable(airports_);
+        } // AirportBrowser* airports_
+        { Fl_Group* o = new Fl_Group(5, 505, 790, 50);
+          { pGB = "具体位置";
+		    pUTF8 = G2U(pGB);
+			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);
+			//carrier_group = new Fl_Group(5, 505, 635, 50, _("Carrier Ops"));  //翻译不太正确
+            carrier_group->box(FL_ENGRAVED_FRAME);
+            carrier_group->labelfont(1);
+            carrier_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+            { pGB = "经度:";
+		      pUTF8 = G2U(pGB);
+			  carrier_ = new Fl_Input(145, 520, 175, 25, pUTF8);
+            } // Fl_Input* carrier_
+            { pGB = "纬度:";
+		      pUTF8 = G2U(pGB);
+			  parkpos_ = new Fl_Input(460, 520, 175, 25,pUTF8);
+			 // parkpos_ = new Fl_Input(460, 520, 175, 25, _("Park pos :"));
+              parkpos_->tooltip(_("Only valid if carrier is set. For airport parking, use the list above."));
+            } // Fl_Input* parkpos_
+            { Fl_Box* o = new Fl_Box(640, 505, 0, 5);
+              Fl_Group::current()->resizable(o);
+            } // Fl_Box* o
+            carrier_group->end();
+            Fl_Group::current()->resizable(carrier_group);
+          } // Fl_Group* carrier_group
+          o->end();
+        } // Fl_Group* o
+        page[21]->end();
+      } // Fl_Group* page[21]
+
+	  //page[22]
+	        { pGB = "投放计划";
+		pUTF8 = G2U(pGB);
+		page[22] = new Fl_Group(0, 0, 800, 560, pUTF8);
+        page[22]->labelfont(1);
+        page[22]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        page[22]->hide();
+        { pGB = "起飞机场";
+		  pUTF8 = G2U(pGB);
+		  show_all_apt = new Fl_Round_Button(5, 20, 100, 15, pUTF8);
+          show_all_apt->tooltip(_("Display all airports"));
+          show_all_apt->type(102);
+          show_all_apt->down_box(FL_ROUND_DOWN_BOX);
+          show_all_apt->callback((Fl_Callback*)cb_show_all_apt);
+        } // Fl_Round_Button* show_all_apt
+        { pGB = "跳伞目的地";
+		  pUTF8 = G2U(pGB);
+		  show_installed_apt = new Fl_Round_Button(5, 40, 100, 15,pUTF8);
+          show_installed_apt->tooltip(_("Display only installed airports"));
+          show_installed_apt->type(102);
+          show_installed_apt->down_box(FL_ROUND_DOWN_BOX);
+          show_installed_apt->value(1);
+          show_installed_apt->callback((Fl_Callback*)cb_show_installed_apt);
+        } // Fl_Round_Button* show_installed_apt
+        { airports_ = new AirportBrowser(5, 55, 790, 415);
+          airports_->box(FL_NO_BOX);
+          airports_->color(FL_BACKGROUND_COLOR);
+          airports_->selection_color(FL_BACKGROUND_COLOR);
+          airports_->labeltype(FL_NORMAL_LABEL);
+          airports_->labelfont(0);
+          airports_->labelsize(14);
+          airports_->labelcolor(FL_FOREGROUND_COLOR);
+          airports_->align(Fl_Align(FL_ALIGN_CENTER));
+          airports_->when(FL_WHEN_RELEASE);
+          Fl_Group::current()->resizable(airports_);
+        } // AirportBrowser* airports_
+        { Fl_Group* o = new Fl_Group(5, 505, 790, 50);
+          { pGB = "具体位置";
+		    pUTF8 = G2U(pGB);
+			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);
+			//carrier_group = new Fl_Group(5, 505, 635, 50, _("Carrier Ops"));  //翻译不太正确
+            carrier_group->box(FL_ENGRAVED_FRAME);
+            carrier_group->labelfont(1);
+            carrier_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+            { pGB = "经度:";
+		      pUTF8 = G2U(pGB);
+			  carrier_ = new Fl_Input(145, 520, 175, 25, pUTF8);
+            } // Fl_Input* carrier_
+            { pGB = "纬度:";
+		      pUTF8 = G2U(pGB);
+			  parkpos_ = new Fl_Input(460, 520, 175, 25,pUTF8);
+			 // parkpos_ = new Fl_Input(460, 520, 175, 25, _("Park pos :"));
+              parkpos_->tooltip(_("Only valid if carrier is set. For airport parking, use the list above."));
+            } // Fl_Input* parkpos_
+            { Fl_Box* o = new Fl_Box(640, 505, 0, 5);
+              Fl_Group::current()->resizable(o);
+            } // Fl_Box* o
+            carrier_group->end();
+            Fl_Group::current()->resizable(carrier_group);
+          } // Fl_Group* carrier_group
+          o->end();
+        } // Fl_Group* o
+        page[22]->end();
+      } // Fl_Group* page[22]
+
+
+
+
+
+
+
+
+
+
       { page[3] = new Fl_Group(0, 0, 800, 560);
         page[3]->hide();
         { Fl_Group* o = new Fl_Group(0, 525, 800, 25);
-          { pGB = "先进的";
+          { pGB = "高级";
 		    pUTF8 = G2U(pGB);
 			Fl_Button* o = new Fl_Button(685, 525, 110, 25,pUTF8);
 			//Fl_Button* o = new Fl_Button(685, 525, 110, 25, _("Advanced..."));
@@ -818,7 +962,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           o->box(FL_ENGRAVED_FRAME);
           o->labelfont(1);
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-          { pGB = "解决方法:";
+          { pGB = "分辨率:";
 		    pUTF8 = G2U(pGB);
 			resolution = new Fl_Choice(100, 30, 125, 25, pUTF8);
             resolution->tooltip(_("Window geometry, WxH"));
@@ -833,24 +977,29 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             }
             resolution->menu(menu_resolution);
           } // Fl_Choice* resolution
-          { game_mode = new Fl_Check_Button(25, 85, 210, 25, _("Full Screen"));
+          { 
+			   pGB = "全屏";
+		    pUTF8 = G2U(pGB);
+			  game_mode = new Fl_Check_Button(25, 85, 210, 25, pUTF8);
             game_mode->down_box(FL_DOWN_BOX);
             game_mode->callback((Fl_Callback*)cb_game_mode);
           } // Fl_Check_Button* game_mode
-          { pGB = "地平线效应";
+          { 
+			  pGB = "地平线效应";
 		    pUTF8 = G2U(pGB);
-			horizon_effect = new Fl_Check_Button(250, 10, 205, 25, pUTF8);
-            horizon_effect->down_box(FL_DOWN_BOX);
-            horizon_effect->callback((Fl_Callback*)cb_horizon_effect);
+			//horizon_effect = new Fl_Check_Button(250, 10, 205, 25, pUTF8);
+           // horizon_effect->down_box(FL_DOWN_BOX);
+          //  horizon_effect->callback((Fl_Callback*)cb_horizon_effect);
           } // Fl_Check_Button* horizon_effect
-          { pGB = "增强跑道照明";
+          { 
+			/*  pGB = "增强跑道照明";
 		    pUTF8 = G2U(pGB);
 			enhanced_lighting = new Fl_Check_Button(250, 35, 205, 25,pUTF8);
             enhanced_lighting->tooltip(_("Use with caution. It may drop your framerate dramatically"));
             enhanced_lighting->down_box(FL_DOWN_BOX);
-            enhanced_lighting->callback((Fl_Callback*)cb_enhanced_lighting);
+            enhanced_lighting->callback((Fl_Callback*)cb_enhanced_lighting);*/
           } // Fl_Check_Button* enhanced_lighting
-          { pGB = "反射高光";
+          { pGB = "高光";
 		    pUTF8 = G2U(pGB);
 			specular_highlight = new Fl_Check_Button(250, 60, 205, 25, pUTF8);
 			//specular_highlight = new Fl_Check_Button(250, 60, 205, 25, _("Specular highlight"));
@@ -880,7 +1029,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             clouds_3d->down_box(FL_DOWN_BOX);
             clouds_3d->callback((Fl_Callback*)cb_clouds_3d);
           } // Fl_Check_Button* clouds_3d
-          { pGB = "bpp :";
+          { pGB = "帧率 :";
 		    pUTF8 = G2U(pGB);
 			bpp = new Fl_Choice(100, 55, 125, 25,pUTF8);
 			//bpp = new Fl_Choice(100, 55, 125, 25, _("bpp :"));  不知道怎么翻译
@@ -905,34 +1054,46 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             o->box(FL_ENGRAVED_FRAME);
             o->labelfont(1);
             o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-            { pGB = "随机的对象";
+            { pGB = "随机建筑物";
 		      pUTF8 = G2U(pGB);
 			  random_objects = new Fl_Check_Button(25, 135, 150, 25,pUTF8);
               random_objects->down_box(FL_DOWN_BOX);
               random_objects->callback((Fl_Callback*)cb_random_objects);
             } // Fl_Check_Button* random_objects
-            { pGB = "随机森林";
+            { pGB = "随机树木";
 		      pUTF8 = G2U(pGB);
 			  random_trees = new Fl_Check_Button(25, 160, 150, 25,pUTF8);
 			  //random_trees = new Fl_Check_Button(25, 160, 150, 25, _("Random trees"));
               random_trees->down_box(FL_DOWN_BOX);
               random_trees->callback((Fl_Callback*)cb_random_trees);
             } // Fl_Check_Button* random_trees
-            { pGB = "人工智能模型";
-		      pUTF8 = G2U(pGB);
-			  ai_models = new Fl_Check_Button(25, 185, 150, 25,pUTF8);
-              ai_models->down_box(FL_DOWN_BOX);
-              ai_models->callback((Fl_Callback*)cb_ai_models);
+            {
+			//pGB = "AI模型";
+		 //   pUTF8 = G2U(pGB);
+			//ai_models = new Fl_Check_Button(25, 185, 150, 25,pUTF8);
+   //         ai_models->down_box(FL_DOWN_BOX);
+   //         ai_models->callback((Fl_Callback*)cb_ai_models);
+
+			//pGB = "AI模型2";
+		 //   pUTF8 = G2U(pGB);
+			//Fl_Check_Button* ai_models1 = new Fl_Check_Button(90, 185, 150, 25,pUTF8);
+   //         ai_models1->down_box(FL_DOWN_BOX);
+   //         ai_models1->callback((Fl_Callback*)cb_ai_models);
+
             } // Fl_Check_Button* ai_models
-            { pGB = "人工智能交通";
+            { 
+				pGB = "自动驾驶";
 		      pUTF8 = G2U(pGB);
-			  ai_traffic = new Fl_Check_Button(35, 210, 140, 25,pUTF8);
+			  ai_traffic = new Fl_Check_Button(25, 235, 140, 25,pUTF8);
               ai_traffic->down_box(FL_DOWN_BOX);
               ai_traffic->callback((Fl_Callback*)cb_ai_traffic);
             } // Fl_Check_Button* ai_traffic
-            { terrasync = new Fl_Check_Button(25, 235, 150, 25, _("TerraSync")); 
-              terrasync->down_box(FL_DOWN_BOX);
-              terrasync->callback((Fl_Callback*)cb_terrasync);
+            {
+				//pGB = "自动";
+		  //    pUTF8 = G2U(pGB);
+				//terrasync = new Fl_Check_Button(25, 235, 150, 25, _("TerraSync")); 
+    //          terrasync->down_box(FL_DOWN_BOX);
+    //          terrasync->callback((Fl_Callback*)cb_terrasync);
             } // Fl_Check_Button* terrasync
             { pGB = "每天的时间:";
 		      pUTF8 = G2U(pGB);
@@ -944,17 +1105,18 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
               time_of_day_value->down_box(FL_BORDER_BOX);
               time_of_day_value->callback((Fl_Callback*)cb_time_of_day_value);
             } // Fl_Choice* time_of_day_value
-            { pGB = "实际天气取回";
+            { pGB = "获取实际天气";
 		      pUTF8 = G2U(pGB);
 			  real_weather_fetch = new Fl_Check_Button(180, 185, 160, 25,pUTF8);//_("Real weather fetch")
               real_weather_fetch->down_box(FL_DOWN_BOX);
               real_weather_fetch->callback((Fl_Callback*)cb_real_weather_fetch);
             } // Fl_Check_Button* real_weather_fetch
-            { pGB = "自动协调";
-		      pUTF8 = G2U(pGB);
-			  auto_coordination = new Fl_Check_Button(180, 210, 170, 25,pUTF8);//_("Auto-coordination")
-              auto_coordination->down_box(FL_DOWN_BOX);
-              auto_coordination->callback((Fl_Callback*)cb_auto_coordination);
+            {
+				////pGB = "自动协调";
+		   //   pUTF8 = G2U(pGB);
+			  //auto_coordination = new Fl_Check_Button(180, 210, 170, 25,pUTF8);//_("Auto-coordination")
+     //         auto_coordination->down_box(FL_DOWN_BOX);
+     //         auto_coordination->callback((Fl_Callback*)cb_auto_coordination);
             } // Fl_Check_Button* auto_coordination
             { pGB = "季节:";
 		      pUTF8 = G2U(pGB);
@@ -1030,39 +1192,49 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             } // Fl_Value_Input* atlas_port
             atlas_group->end();
           } // Fl_Group* atlas_group
-          { multiplay_group = new Fl_Group(255, 305, 540, 60);
-            multiplay_group->box(FL_ENGRAVED_FRAME);
-            { pGB = "多玩家";
+          {
+			  //multiplay_group = new Fl_Group(255, 305, 540, 60);
+           // multiplay_group->box(FL_ENGRAVED_FRAME);
+          //  {
+			//pGB = "多玩家";
+		   //  pUTF8 = G2U(pGB);
+			  //multiplay = new Fl_Check_Button(260, 310, 130, 25, pUTF8);//_("Multiplayer")
+     //         multiplay->down_box(FL_DOWN_BOX);
+     //         multiplay->labelfont(1);
+     //         multiplay->callback((Fl_Callback*)cb_multiplay);
+        //    } // Fl_Check_Button* multiplay
+        //    { 
+				//pGB = "呼号:";
+		  //    pUTF8 = G2U(pGB);
+			 // multiplay_callsign = new Fl_Input(545, 310, 170, 25, pUTF8);//_("Callsign :")
+    //          multiplay_callsign->callback((Fl_Callback*)cb_multiplay_callsign);
+    //          multiplay_callsign->when(FL_WHEN_CHANGED);
+         //   } // Fl_Input* multiplay_callsign
+         //   { 
+				//pGB = "主机名:";
+		  //    pUTF8 = G2U(pGB);
+			 // multiplay_host = new Fl_Input(355, 335, 120, 25, pUTF8);//_("Hostname :")
+    //          multiplay_host->tooltip(_("Peer hostname"));
+    //          multiplay_host->callback((Fl_Callback*)cb_multiplay_host);
+    //          multiplay_host->when(FL_WHEN_CHANGED);
+    //          Fl_Group::current()->resizable(multiplay_host);
+         //   } // Fl_Input* multiplay_host
+         //   { 
+			/*	pGB = "进";
 		      pUTF8 = G2U(pGB);
-			  multiplay = new Fl_Check_Button(260, 310, 130, 25, pUTF8);//_("Multiplayer")
-              multiplay->down_box(FL_DOWN_BOX);
-              multiplay->labelfont(1);
-              multiplay->callback((Fl_Callback*)cb_multiplay);
-            } // Fl_Check_Button* multiplay
-            { pGB = "呼号:";
-		      pUTF8 = G2U(pGB);
-			  multiplay_callsign = new Fl_Input(545, 310, 170, 25, pUTF8);//_("Callsign :")
-              multiplay_callsign->callback((Fl_Callback*)cb_multiplay_callsign);
-              multiplay_callsign->when(FL_WHEN_CHANGED);
-            } // Fl_Input* multiplay_callsign
-            { pGB = "主机名:";
-		      pUTF8 = G2U(pGB);
-			  multiplay_host = new Fl_Input(355, 335, 120, 25, pUTF8);//_("Hostname :")
-              multiplay_host->tooltip(_("Peer hostname"));
-              multiplay_host->callback((Fl_Callback*)cb_multiplay_host);
-              multiplay_host->when(FL_WHEN_CHANGED);
-              Fl_Group::current()->resizable(multiplay_host);
-            } // Fl_Input* multiplay_host
-            { multiplay_in = new Fl_Value_Input(545, 335, 50, 25, _("in :"));
+				multiplay_in = new Fl_Value_Input(545, 335, 50, 25, pUTF8);
               multiplay_in->tooltip(_("Input port number"));
-              multiplay_in->callback((Fl_Callback*)cb_multiplay_in);
-            } // Fl_Value_Input* multiplay_in
-            { multiplay_out = new Fl_Value_Input(665, 335, 50, 25, _("out :"));
+              multiplay_in->callback((Fl_Callback*)cb_multiplay_in);*/
+         //   } // Fl_Value_Input* mult  iplay_in
+            { 
+							/*	pGB = "出";
+		      pUTF8 = G2U(pGB);
+				multiplay_out = new Fl_Value_Input(665, 335, 50, 25, pUTF8);
               multiplay_out->tooltip(_("Output port number"));
-              multiplay_out->callback((Fl_Callback*)cb_multiplay_out);
+              multiplay_out->callback((Fl_Callback*)cb_multiplay_out);*/
             } // Fl_Value_Input* multiplay_out
-            multiplay_group->end();
-            Fl_Group::current()->resizable(multiplay_group);
+         //   multiplay_group->end();
+          //  Fl_Group::current()->resizable(multiplay_group);
           } // Fl_Group* multiplay_group
           o->end();
         } // Fl_Group* o

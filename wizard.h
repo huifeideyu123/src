@@ -104,8 +104,8 @@ private:
   void cb_aircraft_i(Fl_Browser*, void*);
   static void cb_aircraft(Fl_Browser*, void*);
   Fl_OSG *preview;
-  //Fl_Output *aircraft_status;
-  //Fl_Output *aircraft_author;
+  Fl_Output *aircraft_status;
+  Fl_Output *aircraft_author;
   Fl_Button *start_viewer;
   void cb_start_viewer_i(Fl_Button*, void*);
   static void cb_start_viewer(Fl_Button*, void*);
@@ -122,12 +122,6 @@ private:
   Fl_Input *parkpos_;
   void cb_Advanced_i(Fl_Button*, void*);
   static void cb_Advanced(Fl_Button*, void*);
-  Fl_Check_Button *Situation_one;  //特请1声明加变量定义
-  void cb_Situation_one_i(Fl_Check_Button*, void*);
-  static void cb_Situation_one(Fl_Check_Button*, void*);  //  特请2
-  Fl_Check_Button *Situation_two;  //特请2声明加变量定义
-  void cb_Situation_two_i(Fl_Check_Button*, void*);
-  static void cb_Situation_two(Fl_Check_Button*, void*);  //  特请2
   Fl_Check_Button *show_cmd_line;
   void cb_show_cmd_line_i(Fl_Check_Button*, void*);
   static void cb_show_cmd_line(Fl_Check_Button*, void*);
@@ -143,10 +137,10 @@ private:
   Fl_Check_Button *game_mode;
   void cb_game_mode_i(Fl_Check_Button*, void*);
   static void cb_game_mode(Fl_Check_Button*, void*);
-  Fl_Check_Button *horizon_effect;
+ // Fl_Check_Button *horizon_effect;
   void cb_horizon_effect_i(Fl_Check_Button*, void*);
   static void cb_horizon_effect(Fl_Check_Button*, void*);
-  Fl_Check_Button *enhanced_lighting;
+ // Fl_Check_Button *enhanced_lighting;
   void cb_enhanced_lighting_i(Fl_Check_Button*, void*);
   static void cb_enhanced_lighting(Fl_Check_Button*, void*);
   Fl_Check_Button *specular_highlight;
@@ -172,13 +166,13 @@ private:
   Fl_Check_Button *random_trees;
   void cb_random_trees_i(Fl_Check_Button*, void*);
   static void cb_random_trees(Fl_Check_Button*, void*);
-  Fl_Check_Button *ai_models;
+ // Fl_Check_Button *ai_models;
   void cb_ai_models_i(Fl_Check_Button*, void*);
   static void cb_ai_models(Fl_Check_Button*, void*);
   Fl_Check_Button *ai_traffic;
   void cb_ai_traffic_i(Fl_Check_Button*, void*);
   static void cb_ai_traffic(Fl_Check_Button*, void*);
-  Fl_Check_Button *terrasync;
+ // Fl_Check_Button *terrasync;
   void cb_terrasync_i(Fl_Check_Button*, void*);
   static void cb_terrasync(Fl_Check_Button*, void*);
   Fl_Check_Button *time_of_day;
@@ -190,7 +184,7 @@ private:
   Fl_Check_Button *real_weather_fetch;
   void cb_real_weather_fetch_i(Fl_Check_Button*, void*);
   static void cb_real_weather_fetch(Fl_Check_Button*, void*);
-  Fl_Check_Button *auto_coordination;
+  //Fl_Check_Button *auto_coordination;
   void cb_auto_coordination_i(Fl_Check_Button*, void*);
   static void cb_auto_coordination(Fl_Check_Button*, void*);
   Fl_Choice *season;
@@ -216,19 +210,19 @@ private:
   void cb_atlas_port_i(Fl_Value_Input*, void*);
   static void cb_atlas_port(Fl_Value_Input*, void*);
   Fl_Group *multiplay_group;
-  Fl_Check_Button *multiplay;
+//  Fl_Check_Button *multiplay;
   void cb_multiplay_i(Fl_Check_Button*, void*);
   static void cb_multiplay(Fl_Check_Button*, void*);
-  Fl_Input *multiplay_callsign;
+//  Fl_Input *multiplay_callsign;
   void cb_multiplay_callsign_i(Fl_Input*, void*);
   static void cb_multiplay_callsign(Fl_Input*, void*);
-  Fl_Input *multiplay_host;
+//  Fl_Input *multiplay_host;
   void cb_multiplay_host_i(Fl_Input*, void*);
   static void cb_multiplay_host(Fl_Input*, void*);
-  Fl_Value_Input *multiplay_in;
+ // Fl_Value_Input *multiplay_in;
   void cb_multiplay_in_i(Fl_Value_Input*, void*);
   static void cb_multiplay_in(Fl_Value_Input*, void*);
-  Fl_Value_Input *multiplay_out;
+ // Fl_Value_Input *multiplay_out;
   void cb_multiplay_out_i(Fl_Value_Input*, void*);
   static void cb_multiplay_out(Fl_Value_Input*, void*);
 public:
@@ -333,8 +327,6 @@ private:
   void save_basic_options( Fl_Preferences &p ); 
   void display_scenarii(); 
   void deselect_all_scenarii_cb(); 
-  void Situation_one_cb(); //特请1的回调函数的声明
-  void Situation_two_cb(); //特请2的回调函数的声明
   void show_cmd_line_cb(); 
   void show_console_cb(); 
   void show_3d_preview_cb(); 

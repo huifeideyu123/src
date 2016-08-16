@@ -55,12 +55,13 @@
 #include <osg/MatrixTransform>
 #include <osgDB/ReadFile>
 
-#include "G2U.h"
 #include "wizard.h"
 #include "advanced.h"
 #include "logwin.h"
 #include "util.h"
 #include "i18n.h"
+
+#include "G2U.h"
 
 #if defined(WIN32) || defined(__EMX__) && !defined(__CYGWIN__)
 # include "os_win32.h"
@@ -82,40 +83,41 @@ extern string def_acft_dir;
 extern string def_ts_dir;
 
 Fl_Menu_Item Wizard::menu_time_of_day_value[] = {
- {N_("dawn"), 0,  0, (void*)"dawn", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("morning"), 0,  0, (void*)"morning", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("noon"), 0,  0, (void*)"noon", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("afternoon"), 0,  0, (void*)"afternoon", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("dusk"), 0,  0, (void*)"dusk", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("evening"), 0,  0, (void*)"evening", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("midnight"), 0,  0, (void*)"midnight", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_dawn()), 0,  0, (void*)"dawn", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_morning()), 0,  0, (void*)"morning", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_noon()), 0,  0, (void*)"noon", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_afternoon()), 0,  0, (void*)"afternoon", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_dusk()), 0,  0, (void*)"dusk", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_evening()), 0,  0, (void*)"evening", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_midnight()), 0,  0, (void*)"midnight", 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
-
 Fl_Menu_Item Wizard::menu_season[] = {
- {N_("summer"), 0,  0, (void*)"summer", 0, FL_NORMAL_LABEL, 0, 14, 0},
- {N_("winter"), 0,  0, (void*)"winter", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_spring()), 0,  0, (void*)"spring", 0, FL_NORMAL_LABEL, 0, 14, 0}, 
+ {N_(get_world_summer()), 0,  0, (void*)"summer", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_autumn()), 0,  0, (void*)"autumn", 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {N_(get_world_winter()), 0,  0, (void*)"winter", 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0}
 };
 
 // This array is not used in the code but is there to put possible status in the translation file
 // Put here all possible variations
-static const char *aircraft_status_[] = {
-    N_("production"),
-    N_("early-production"),
-    N_("early production"),
-    N_("Early production"),
-    N_("beta"),
-    N_("alpha"),
-    N_("early alpha"),
-    N_("Development"),
-    N_("developement"),
-    N_("development"),
-    N_("devel"),
-    N_("Early development"),
-    N_("experimental"),
-    0
-};
+//static const char *aircraft_status_[] = {
+//    N_("production"),
+//    N_("early-production"),
+//    N_("early production"),
+//    N_("Early production"),
+//    N_("beta"),
+//    N_("alpha"),
+//    N_("early alpha"),
+//    N_("Development"),
+//    N_("developement"),
+//    N_("development"),
+//    N_("devel"),
+//    N_("Early development"),
+//    N_("experimental"),
+//    0
+//};
 
 /**
  * Data associated with each entry in the aircraft browser.
@@ -249,8 +251,6 @@ static const char* about_text = N_("\
 void
 Wizard::reset()
 {
-	char* pGB ="下一页";
-	char* UTF8 = G2U(pGB);
     const int buflen = FL_PATH_MAX;
     char buf[ buflen ];
 
@@ -401,9 +401,12 @@ Wizard::reset()
         next->activate();
         page[1]->show();
     }
-    next->label(UTF8);  //_("Next")
 
-    prefs.get("show_cmd_line", iVal, 0); 
+			char* pGB = "下一步";
+	    char* PUTF8 = G2U(pGB);
+    next->label( PUTF8 );
+
+    prefs.get("show_cmd_line", iVal, 0);
     show_cmd_line->value(iVal);
     if ( iVal )
         text->show();
@@ -458,7 +461,7 @@ Wizard::init( bool fullscreen )
     win->size_range( 800, 600 );
     text->buffer( new Fl_Text_Buffer );
 
-    multiplay_callsign->maximum_size( 7 );
+  //  multiplay_callsign->maximum_size( 7 );
 
     logwin = new LogWindow( 640, 480, _("Log Window") );
 
@@ -797,8 +800,8 @@ Wizard::preview_aircraft(bool desel_mru)
         return;
     }
 
-    //aircraft_status->value( _( data->status.c_str() ) );
-    //aircraft_author->value( data->author.c_str() );
+   // aircraft_status->value( _( data->status.c_str() ) );
+   // aircraft_author->value( data->author.c_str() );
     aircraft_location->value( data->root.c_str() );
 
     next->activate();
@@ -807,8 +810,6 @@ Wizard::preview_aircraft(bool desel_mru)
 void
 Wizard::next_cb()
 {
-	char* pGB = "运行";
-	char* UTF8 = G2U(pGB);
     prev->activate();
 
     if (wiz->value() == page[0])
@@ -941,17 +942,19 @@ Wizard::next_cb()
         ostr << fg_exe_->value() << "\n  ";
         write_fgfsrc( prefs, ostr, "\n  " );
         text->buffer()->text( ostr.str().c_str() );
-        next->label( UTF8);  //_("Run")
+		char* pGB = "运行";
+	    char* PUTF8 = G2U(pGB);
+        next->label( PUTF8 );
     }
 }
 
 void
 Wizard::prev_cb()
 {
-	char* pGB = "下一页";
-	char* UTF8 = G2U(pGB);
     next->activate();
-    next->label(UTF8);  //   _("Next") 
+			char* pGB = "下一步";
+	    char* PUTF8 = G2U(pGB);
+    next->label( _(PUTF8) );
     if (wiz->value() == page[2])
     {
         aircraft_mru_update();
@@ -969,12 +972,8 @@ Wizard::prev_cb()
 
 void
 Wizard::defaults_cb()
-{  
-	char* pGB1 = "中止";
-	char* UTF81 = G2U(pGB1);
-	char* pGB2 = "重置";
-	char* UTF82 = G2U(pGB2);
-    int r = fl_choice(_("About to reset current parameters"),UTF81 ,UTF82 , 0 );  // _("Abort"), _("Reset")
+{
+    int r = fl_choice( _("About to reset current parameters"), _("Abort"), _("Reset"), 0 );
     if (!r)
         return;
     if (adv == 0)
@@ -1549,14 +1548,14 @@ Wizard::game_mode_cb()
 void
 Wizard::horizon_effect_cb()
 {
-    prefs.set("horizon_effect", horizon_effect->value());
-    update_options();
+   // prefs.set("horizon_effect", horizon_effect->value());
+  //  update_options();
 }
 
 void
 Wizard::enhanced_lighting_cb()
 {
-    prefs.set("enhanced_lighting", enhanced_lighting->value());
+//    prefs.set("enhanced_lighting", enhanced_lighting->value());
     update_options();
 }
 
@@ -1614,20 +1613,20 @@ Wizard::random_trees_cb()
 void
 Wizard::ai_models_cb()
 {
-    prefs.set("ai_models", ai_models->value());
-    if ( ai_models->value() == 0 )
-    {
-        ai_traffic->value(0);
-        prefs.set("ai_traffic", ai_traffic->value());
-        ai_traffic->deactivate();
-        multiplay->value(0);
-        multiplay_cb();
-    }
-    else
-    {
-        ai_traffic->activate();
-        update_options();
-    }
+    //prefs.set("ai_models", ai_models->value());
+    //if ( ai_models->value() == 0 )
+    //{
+    //    ai_traffic->value(0);
+    //    prefs.set("ai_traffic", ai_traffic->value());
+    //    ai_traffic->deactivate();
+    //    //multiplay->value(0);
+    //    multiplay_cb();
+    //}
+    //else
+    //{
+    //    ai_traffic->activate();
+    //    update_options();
+    //}
 }
 
 void
@@ -1684,8 +1683,8 @@ Wizard::real_weather_fetch_cb()
 void
 Wizard::auto_coordination_cb()
 {
-    prefs.set("auto_coordination", auto_coordination->value());
-    update_options();
+    //prefs.set("auto_coordination", auto_coordination->value());
+    //update_options();
 }
 
 void
@@ -1742,16 +1741,16 @@ Wizard::scenarii_cb()
 void
 Wizard::terrasync_cb()
 {
-    int v = terrasync->value();
-    if ( v == 0 )
-    {
-        prefs.set("terrasync",0);
-    }
-    else
-    {
-        prefs.set("terrasync",1);
-    }
-    update_options();
+    //int v = terrasync->value();
+    //if ( v == 0 )
+    //{
+    //    prefs.set("terrasync",0);
+    //}
+    //else
+    //{
+    //    prefs.set("terrasync",1);
+    //}
+    //update_options();
 }
 
 void
@@ -1887,47 +1886,47 @@ Wizard::atlas_port_cb()
 void
 Wizard::multiplay_cb()
 {
-    int v = multiplay->value();
-    if ( v == 0 )
-    {
-        multiplay_callsign->deactivate();
-        multiplay_host->deactivate();
-        multiplay_in->deactivate();
-        multiplay_out->deactivate();
-        prefs.set("callsign","");
-        prefs.set("multiplay1","");
-        prefs.set("multiplay2","");
-    }
-    else
-    {
-        multiplay_callsign->activate();
-        multiplay_host->activate();
-        multiplay_in->activate();
-        multiplay_out->activate();
+    //int v = multiplay->value();
+    //if ( v == 0 )
+    //{
+    //    multiplay_callsign->deactivate();
+    //    multiplay_host->deactivate();
+    //    multiplay_in->deactivate();
+    //    multiplay_out->deactivate();
+    //    prefs.set("callsign","");
+    //    prefs.set("multiplay1","");
+    //    prefs.set("multiplay2","");
+    //}
+    //else
+    //{
+    //    multiplay_callsign->activate();
+    //    multiplay_host->activate();
+    //    multiplay_in->activate();
+    //    multiplay_out->activate();
 
-        string callsign = multiplay_callsign->value();
-        string host = multiplay_host->value();
-        int in = (int)multiplay_in->value();
-        int out = (int)multiplay_out->value();
+    //    string callsign = multiplay_callsign->value();
+    //    string host = multiplay_host->value();
+    //    int in = (int)multiplay_in->value();
+    //    int out = (int)multiplay_out->value();
 
-        prefs.set("callsign",callsign.c_str());
-        std::ostringstream str;
-        str << "out,10," << host << "," << out;
-        prefs.set("multiplay1",str.str().c_str());
-        str.str("");
-        str << "in,10,," << in;
-        prefs.set("multiplay2",str.str().c_str());
+    //    prefs.set("callsign",callsign.c_str());
+    //    std::ostringstream str;
+    //    str << "out,10," << host << "," << out;
+    //    prefs.set("multiplay1",str.str().c_str());
+    //    str.str("");
+    //    str << "in,10,," << in;
+    //    prefs.set("multiplay2",str.str().c_str());
 
-        ai_models->value(1);
-        ai_models_cb();
-    }
-    update_options();
+    //    ai_models->value(1);
+    //    ai_models_cb();
+    //}
+    //update_options();
 }
 
 void
 Wizard::multiplay_field_cb()
 {
-    string callsign = multiplay_callsign->value();
+   /* string callsign = multiplay_callsign->value();
     string host = multiplay_host->value();
     int in = (int)multiplay_in->value();
     int out = (int)multiplay_out->value();
@@ -1939,13 +1938,13 @@ Wizard::multiplay_field_cb()
     str.str("");
     str << "in,10,," << in;
     prefs.set("multiplay2",str.str().c_str());
-    update_options();
+    update_options();*/
 }
 
 void
 Wizard::multiplay_callsign_cb()
 {
-    string callsign = multiplay_callsign->value();
+   /* string callsign = multiplay_callsign->value();
     string::size_type p;
     if ((p = callsign.find(' ')) != string::npos)
     {
@@ -1953,7 +1952,7 @@ Wizard::multiplay_callsign_cb()
         multiplay_callsign->value(callsign.c_str());
     }
     else
-        multiplay_field_cb();
+        multiplay_field_cb();*/
 }
 
 void
@@ -1995,10 +1994,10 @@ Wizard::update_basic_options( Fl_Preferences &p )
     int iVal, iVal2;
     p.get("fullscreen", iVal, 0);
     game_mode->value(iVal);
-    p.get("horizon_effect", iVal, 0);
-    horizon_effect->value(iVal);
-    p.get("enhanced_lighting", iVal, 0);
-    enhanced_lighting->value(iVal);
+   // p.get("horizon_effect", iVal, 0);
+   // horizon_effect->value(iVal);
+   // p.get("enhanced_lighting", iVal, 0);
+   // enhanced_lighting->value(iVal);
     p.get("specular_highlight", iVal, 0);
     specular_highlight->value(iVal);
     p.get("clouds3d", iVal, 0);
@@ -2016,14 +2015,14 @@ Wizard::update_basic_options( Fl_Preferences &p )
     random_objects->value(iVal);
     p.get("random_trees", iVal, 0);
     random_trees->value(iVal);
-    p.get("ai_models", iVal, 0);
-    ai_models->value(iVal);
+   // p.get("ai_models", iVal, 0);
+   // ai_models->value(iVal);
     p.get("ai_traffic", iVal, 0);
     ai_traffic->value(iVal);
-    if (ai_models->value() == 0)
-        ai_traffic->deactivate();
-    else
-        ai_traffic->activate();
+    //if (ai_models->value() == 0)
+    //    ai_traffic->deactivate();
+    //else
+    //    ai_traffic->activate();
     p.get("time_of_day", iVal, 0);
     time_of_day->value(iVal);
     p.get("time_of_day_value", buf, "noon", buflen-1);
@@ -2032,18 +2031,14 @@ Wizard::update_basic_options( Fl_Preferences &p )
     set_choice( season, buf );
     p.get("fetch_real_weather", iVal, 0);
     real_weather_fetch->value(iVal);
-    p.get("auto_coordination", iVal, 0);
-    auto_coordination->value(iVal);
-    p.get("terrasync", iVal, 0);
-    terrasync->value(iVal);
+ /*   p.get("auto_coordination", iVal, 0);
+    auto_coordination->value(iVal);*/
+    //p.get("terrasync", iVal, 0);
+    //terrasync->value(iVal);
     p.get("autovisibility", iVal, 0);
     auto_visibility->value(iVal);
 	
-	p.get("Situation_one", iVal, 0);   
-	Situation_one->value(iVal);        //特情1勾选
-	p.get("Situation_two", iVal, 0);   
-	Situation_two->value(iVal);      //特情2勾选
-    p.get("show_console", iVal, 0); 
+    p.get("show_console", iVal, 0);
     show_console->value(iVal);
 
     atlas->value(0);
@@ -2088,15 +2083,15 @@ Wizard::update_basic_options( Fl_Preferences &p )
         }
     }
 
-    multiplay->value(0);
-    multiplay_callsign->value("");
-    multiplay_host->value("");
-    multiplay_in->value(0);
-    multiplay_out->value(0);
-    multiplay_callsign->deactivate();
-    multiplay_host->deactivate();
-    multiplay_in->deactivate();
-    multiplay_out->deactivate();
+    //multiplay->value(0);
+    //multiplay_callsign->value("");
+    //multiplay_host->value("");
+    //multiplay_in->value(0);
+    //multiplay_out->value(0);
+    //multiplay_callsign->deactivate();
+    //multiplay_host->deactivate();
+    //multiplay_in->deactivate();
+    //multiplay_out->deactivate();
 
     p.get("callsign", buf, "", buflen-1 );
     string callsign(buf);
@@ -2142,15 +2137,15 @@ Wizard::update_basic_options( Fl_Preferences &p )
                                     int out = atoi(multiplay1.c_str());
                                     int in = atoi(multiplay2.c_str());
 
-                                    multiplay->value(1);
-                                    multiplay_callsign->value(callsign.c_str());
-                                    multiplay_callsign->activate();
-                                    multiplay_host->value(host.c_str());
-                                    multiplay_host->activate();
-                                    multiplay_in->value(in);
-                                    multiplay_in->activate();
-                                    multiplay_out->value(out);
-                                    multiplay_out->activate();
+                                    //multiplay->value(1);
+                                    //multiplay_callsign->value(callsign.c_str());
+                                    //multiplay_callsign->activate();
+                                    //multiplay_host->value(host.c_str());
+                                    //multiplay_host->activate();
+                                    //multiplay_in->value(in);
+                                    //multiplay_in->activate();
+                                    //multiplay_out->value(out);
+                                    //multiplay_out->activate();
                                 }
                             }
                         }
@@ -2209,24 +2204,6 @@ Wizard::deselect_all_scenarii_cb()
     scenarii_help->tooltip( _("Select a scenario to display its description") );
 
     prefs.set("scenario-count", 0);
-    update_options();
-}
-
-void
-Wizard::Situation_one_cb() //特情1
-{
-   /* if (Situation_one->value() )
-        text->show();
-    else
-        text->hide();*/
-    prefs.set("Situation_one", Situation_one->value());
-	update_options();
-}
-
-void
-Wizard::Situation_two_cb() //特情2还
-{
-    prefs.set("Situation_two", Situation_two->value());
     update_options();
 }
 
@@ -2377,8 +2354,8 @@ Wizard::save_basic_options( Fl_Preferences &p )
     p.set("geometry", resolution->text());
     p.set("bpp", bpp->text());
     p.set("fullscreen", game_mode->value());
-    p.set("horizon_effect", horizon_effect->value());
-    p.set("enhanced_lighting", enhanced_lighting->value());
+   // p.set("horizon_effect", horizon_effect->value());
+   // p.set("enhanced_lighting", enhanced_lighting->value());
     p.set("specular_highlight", specular_highlight->value());
     p.set("clouds3d", clouds_3d->value());
     int v = frame_rate_limiter->value();
@@ -2394,7 +2371,7 @@ Wizard::save_basic_options( Fl_Preferences &p )
     p.set("frame_rate_limiter_value", frame_rate_limiter_value->value() );
     p.set("random_objects", random_objects->value());
     p.set("random_trees", random_trees->value());
-    p.set("ai_models", ai_models->value());
+    //p.set("ai_models", ai_models->value());
 
     v = time_of_day->value();
     if ( v == 0 )
@@ -2416,7 +2393,7 @@ Wizard::save_basic_options( Fl_Preferences &p )
     p.set("time_of_day_value", (const char *)time_of_day_value->mvalue()->user_data_);
     p.set("season", (const char *)season->mvalue()->user_data_);
     p.set("fetch_real_weather", real_weather_fetch->value());
-    p.set("auto_coordination", auto_coordination->value());
+    /*p.set("auto_coordination", auto_coordination->value());*/
 
     int nb = 0;
     for (int i = 1; i <= scenarii->size(); ++i)
@@ -2483,27 +2460,27 @@ Wizard::save_basic_options( Fl_Preferences &p )
         p.set( Fl_Preferences::Name( "io-item-%d", loc ), opt.str().c_str() );
     }
 
-    v = multiplay->value();
+   // v = multiplay->value();
     if ( v == 0 )
     {
-        p.set("callsign","");
-        p.set("multiplay1","");
-        p.set("multiplay2","");
+        //p.set("callsign","");
+        //p.set("multiplay1","");
+        //p.set("multiplay2","");
     }
     else
     {
-        string callsign = multiplay_callsign->value();
-        string host = multiplay_host->value();
-        int in = (int)multiplay_in->value();
-        int out = (int)multiplay_out->value();
+       //string callsign = multiplay_callsign->value();
+       // string host = multiplay_host->value();
+       // int in = (int)multiplay_in->value();
+       // int out = (int)multiplay_out->value();
 
-        p.set("callsign",callsign.c_str());
-        std::ostringstream str;
-        str << "out,10," << host << "," << out;
-        p.set("multiplay1",str.str().c_str());
-        str.str("");
-        str << "in,10,," << in;
-        p.set("multiplay2",str.str().c_str());
+       // p.set("callsign",callsign.c_str());
+       // std::ostringstream str;
+       // str << "out,10," << host << "," << out;
+       // p.set("multiplay1",str.str().c_str());
+       // str.str("");
+       // str << "in,10,," << in;
+       // p.set("multiplay2",str.str().c_str());
     }
 
 
@@ -2512,9 +2489,7 @@ Wizard::save_basic_options( Fl_Preferences &p )
 void
 Wizard::load_preferences_cb()
 {
-	char* pGB = "负载设置";
-	char* UTF8 = G2U(pGB);
-    char *filename = fl_file_chooser(UTF8 , "*.fgrun", "settings.fgrun" );  //_("Load settings from...")
+    char *filename = fl_file_chooser( _("Load settings from..."), "*.fgrun", "settings.fgrun" );
     if ( filename )
     {
         win->cursor( FL_CURSOR_WAIT );
@@ -2594,22 +2569,14 @@ Wizard::load_preferences_cb()
 void
 Wizard::save_preferences_cb()
 {
-	char* pGB = "保存设置";
-	char* UTF8 = G2U(pGB);
-	char* pGB1 = "文件名\"%s\"已经存在";
-	char* UTF81 = G2U(pGB1);
-	char* pGB2 = "覆盖";
-	char* UTF82 = G2U(pGB2);
-	char* pGB3 = "不覆盖";
-	char* UTF83 = G2U(pGB3);
     char *filename = 0;
     for (;;)
     {
-        filename = fl_file_chooser( UTF8, "*.fgrun", "settings.fgrun" );  //_("Save settings as...")
+        filename = fl_file_chooser( _("Save settings as..."), "*.fgrun", "settings.fgrun" );
         struct stat stat_info;
         if ( !filename ||
                 stat( filename, &stat_info ) != 0 ||
-                fl_choice(UTF81,UTF82,UTF83,0,fl_filename_name( filename ) ) == 0 )  //_("Filename \"%s\" already exists."),_("Overwrite"), _("Don't overwrite")
+                fl_choice( _("Filename \"%s\" already exists."), _("Overwrite"), _("Don't overwrite"), 0, fl_filename_name( filename ) ) == 0 )
         {
             break;
         }

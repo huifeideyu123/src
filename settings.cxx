@@ -85,8 +85,8 @@ Advanced::save_settings( Fl_Preferences& prefs )
     prefs.set("hud", hud->value());
     prefs.set("antialias_hud", antialias_hud->value());
     prefs.set("hud_3d", hud_3d->value());
-    prefs.set("auto_coordination", auto_coordination->value());
-    prefs.set("horizon_effect", horizon_effect->value());
+    //prefs.set("auto_coordination", auto_coordination->value());
+    //prefs.set("horizon_effect", horizon_effect->value());
     prefs.set("enhanced_lighting", enhanced_lighting->value());
     prefs.set("distance_attenuation", distance_attenuation->value());
     prefs.set("specular_highlight", specular_highlight->value());
@@ -95,7 +95,7 @@ Advanced::save_settings( Fl_Preferences& prefs )
     prefs.set("failure_pitot", failure_pitot->value());
     prefs.set("failure_static", failure_static->value());
     prefs.set("failure_vacuum", failure_vacuum->value());
-    prefs.set("ai_models", ai_models->value());
+    //prefs.set("ai_models", ai_models->value());
     prefs.set("ai_traffic", ai_traffic->value());
 
     prefs.set("fdm", fdm->text());
@@ -323,10 +323,10 @@ Advanced::load_settings( Fl_Preferences& prefs )
     antialias_hud->value(iVal);
     prefs.get("hud_3d", iVal, 1);
     hud_3d->value(iVal);
-    prefs.get("auto_coordination", iVal, 0);
-    auto_coordination->value(iVal);
-    prefs.get("horizon_effect", iVal, 0);
-    horizon_effect->value( iVal );
+    //prefs.get("auto_coordination", iVal, 0);
+    //auto_coordination->value(iVal);
+  //  prefs.get("horizon_effect", iVal, 0);
+ //   horizon_effect->value( iVal );
     prefs.get("enhanced_lighting", iVal, 0);
     enhanced_lighting->value( iVal );
     prefs.get("distance_attenuation", iVal, 0);
@@ -344,14 +344,14 @@ Advanced::load_settings( Fl_Preferences& prefs )
     failure_static->value( iVal );
     prefs.get("failure_vacuum", iVal, 0);
     failure_vacuum->value( iVal );
-    prefs.get("ai_models", iVal, 0);
-    ai_models->value( iVal );
+   // prefs.get("ai_models", iVal, 0);
+   // ai_models->value( iVal );
     prefs.get("ai_traffic", iVal, 0);
     ai_traffic->value( iVal );
-    if (ai_models->value() == 0)
-        ai_traffic->deactivate();
-    else
-        ai_traffic->activate();
+    //if (ai_models->value() == 0)
+    //    ai_traffic->deactivate();
+    //else
+    //    ai_traffic->activate();
 
     prefs.get("fdm", buf, "automatic selection", buflen-1);
     set_choice(fdm, buf);
@@ -659,8 +659,8 @@ Advanced::reset_settings( Fl_Preferences& prefs )
     prefs.deleteEntry("hud" );
     prefs.deleteEntry("antialias_hud" );
     prefs.deleteEntry("hud_3d" );
-    prefs.deleteEntry("auto_coordination" );
-    prefs.deleteEntry("horizon_effect" );
+    //prefs.deleteEntry("auto_coordination" );
+   // prefs.deleteEntry("horizon_effect" );
     prefs.deleteEntry("enhanced_lighting" );
     prefs.deleteEntry("distance_attenuation" );
     prefs.deleteEntry("specular_highlight" );
@@ -669,7 +669,7 @@ Advanced::reset_settings( Fl_Preferences& prefs )
     prefs.deleteEntry("failure_pitot" );
     prefs.deleteEntry("failure_static" );
     prefs.deleteEntry("failure_vacuum" );
-    prefs.deleteEntry("ai_models" );
+   // prefs.deleteEntry("ai_models" );
     prefs.deleteEntry("ai_traffic" );
 
     prefs.deleteEntry("fdm" );

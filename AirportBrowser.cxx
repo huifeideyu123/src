@@ -34,11 +34,13 @@
 #include "AirportTable.h"
 #include "parkingloader.h"
 #include "i18n.h"
-#include "G2U.h"
 
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Hold_Browser.H>
 #include <FL/Fl_Input.H>
+
+#include "G2U.h"
+
 
 using std::string;
 using std::vector;
@@ -55,8 +57,7 @@ AirportBrowser::AirportBrowser( int X, int Y, int W, int H,
     Y += 5;
     int tw = W - 120 - 5;
     int th = H - 35 - 5;
-	char* pGB = "跑道";
-	char* UTF8 = G2U(pGB);
+
     table_ = new AirportTable( X, Y, tw, th );
     table_->color( FL_LIGHT3 );
     table_->selection_color( (Fl_Color)3 );
@@ -83,22 +84,24 @@ AirportBrowser::AirportBrowser( int X, int Y, int W, int H,
     g->resizable(name_);
 
     int rh = ( th - 30 ) / 2;
-    runways_ = new Fl_Hold_Browser( X+tw+5, Y, 120, rh, UTF8); //_("Runways") 
+	char* pGB = "跑道";
+	char * pUTF8 = G2U(pGB);
+    runways_ = new Fl_Hold_Browser( X+tw+5, Y, 120, rh, pUTF8 );
     runways_->align( FL_ALIGN_TOP );
     runways_->callback( &AirportBrowser::cb_runways_ );
 
-    {   pGB = "停靠地点";
-		UTF8 = G2U(pGB);
-		Fl_Group *o = new Fl_Group( X+tw+5, Y+rh, 120, th-rh );
-        parking_ = new Fl_Hold_Browser( X+tw+5, Y+rh+30, 120, th-rh-30, UTF8);  //_("Parking")
+    {   Fl_Group *o = new Fl_Group( X+tw+5, Y+rh, 120, th-rh );
+	    pGB = "停靠地点";
+		pUTF8 = G2U(pGB);
+        parking_ = new Fl_Hold_Browser( X+tw+5, Y+rh+30, 120, th-rh-30, pUTF8 );
         parking_->align( FL_ALIGN_TOP );
         parking_->callback( &AirportBrowser::cb_parking_ );
         o->end();
         o->resizable( parking_ );
     }
-	 pGB = "更新";
-	UTF8 = G2U(pGB);
-    refresh_ = new Fl_Button( X+tw+5, Y+th+5, 120, 25,UTF8);  //_("Refresh") 
+	pGB = "更新";
+	pUTF8 = G2U(pGB);
+    refresh_ = new Fl_Button( X+tw+5, Y+th+5, 120, 25, pUTF8 );
     refresh_->labelsize(12);
     refresh_->callback( refresh_cb, this );
     refresh_->tooltip( _("Reload airports") );

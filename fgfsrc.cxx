@@ -87,8 +87,8 @@ Wizard::write_fgfsrc( Fl_Preferences &prefs, std::ostream& os, const char* pfx )
     prefs.get( "fg_scenery", buf, "", buflen-1 );
     os << pfx << "--fg-scenery=" << buf;
 
-    if (prefs.get( "ts_dir", buf, "", buflen-1 ) && buf[0] != 0)
-        os << pfx << "--terrasync-dir=" << buf;
+    //if (prefs.get( "ts_dir", buf, "", buflen-1 ) && buf[0] != 0)
+    //    os << pfx << "--terrasync-dir=" << buf;
 
     prefs.get( "fg_aircraft", buf, "", buflen-1 );
     if ( buf[0] != 0 )
@@ -120,14 +120,8 @@ Wizard::write_fgfsrc( Fl_Preferences &prefs, std::ostream& os, const char* pfx )
     int iVal, iVal2;
     double dVal;
 
-	//Situation  ּ״ַי
-    if (prefs.get( "Situation_one", iVal, 0 ) && iVal)  
-        os << pfx << "--Situation_one";
-    if (prefs.get( "Situation_two", iVal, 0 ) && iVal)  
-        os << pfx << "--Situation_two";
-
     // Features - only set non-default values.
-    if (prefs.get( "show_console", iVal, 0 ) && iVal)   
+    if (prefs.get( "show_console", iVal, 0 ) && iVal)
         os << pfx << "--console";
     if (prefs.get( "splash_screen", iVal, 1 ) && !iVal)
         os << pfx << "--disable-splash-screen";
@@ -155,10 +149,10 @@ Wizard::write_fgfsrc( Fl_Preferences &prefs, std::ostream& os, const char* pfx )
 
     if (prefs.get( "hud_3d", iVal, 1 ) && !iVal)
         os << pfx << "--disable-hud-3d";
-    if (prefs.get( "auto_coordination", iVal, 0 ) && iVal)
-        os << pfx << "--enable-auto-coordination";
-    if (prefs.get( "horizon_effect", iVal, 0 ) && iVal)
-        os << pfx << "--enable-horizon-effect";
+  /*  if (prefs.get( "auto_coordination", iVal, 0 ) && iVal)
+        os << pfx << "--enable-auto-coordination";*/
+  //  if (prefs.get( "horizon_effect", iVal, 0 ) && iVal)
+   //     os << pfx << "--enable-horizon-effect";
     if (prefs.get( "enhanced_lighting", iVal, 0 ) && iVal)
         os << pfx << "--enable-enhanced-lighting";
     if (prefs.get( "distance_attenuation", iVal, 0 ) && iVal)
@@ -178,9 +172,9 @@ Wizard::write_fgfsrc( Fl_Preferences &prefs, std::ostream& os, const char* pfx )
             os << pfx << "--failure=vacuum";
     }
 
-    prefs.get( "ai_models", iVal, 0 );
+ /*   prefs.get( "ai_models", iVal, 0 );
     if (iVal)
-        os << pfx << "--enable-ai-models";
+        os << pfx << "--enable-ai-models";*/
     else
         os << pfx << "--disable-ai-models";
 
@@ -355,10 +349,10 @@ Wizard::write_fgfsrc( Fl_Preferences &prefs, std::ostream& os, const char* pfx )
     if ( prefs.get( "season", buf, "", buflen-1 ) && strcmp(buf,"summer")!=0 )
         os << pfx << "--season=" << buf;
 
-    if ( prefs.get( "terrasync", iVal, 1 ) && iVal )
-        os << pfx << "--enable-terrasync";
-    else
-        os << pfx << "--disable-terrasync";
+    //if ( prefs.get( "terrasync", iVal, 1 ) && iVal )
+    //    os << pfx << "--enable-terrasync";
+    //else
+    //    os << pfx << "--disable-terrasync";
 
     // Network.
     if (prefs.get( "httpd", iVal, 0 ) && iVal)

@@ -33,8 +33,6 @@
 #include "advanced.h"
 #include "i18n.h"
 #include "util.h"
-//#include "wizard.h"
-#include "G2U.h"
 //#include <afxdisp.h>        // MFC Automation classes
 #include <tchar.h>
 #include <string>
@@ -158,8 +156,6 @@ Fl_Menu_Item Advanced::menu_anti_aliasing[] = {
 void
 Advanced::init()
 {
-	char* pGB;
-	char* pUTF8;
     for( int i = 0; i < MAX_CLOUD_LAYERS; ++i)
     {
         cloud_elevation[i] = 0;
@@ -221,52 +217,27 @@ Advanced::init()
     set_choice( fdm, "automatic selection" );
     set_choice( log_level, "alert" );
 
-
-	pGB = "常规";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8); //_("General")
-	pGB = "特性";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);  //_("Features")
-	pGB = "飞行模式";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);//_("Flight Model")
-	pGB = "冻结";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8); //_("Freeze")
-	pGB = "初始位置";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);//_("Initial Position")
-	pGB = "渲染";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8); //_("Rendering")
-	pGB = "时间";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);  //_("Time")
-	pGB = "NET 网络";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);
-	pGB = "输入/输出";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);  //_("Input/Output")
-	pGB = "设备";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);//_("Avionics")
-	pGB = "属性";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);//_("Properties")
-	pGB = "调试";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);  //_("Debugging")
-	pGB = "环境";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);//_("Environment")
-	pGB = "天气";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);  //_("Weather")
-	pGB = "云";
-	pUTF8 = G2U(pGB);
-    page_list->add(pUTF8);//_("Clouds")
+    page_list->add(_("General"));
+    page_list->add(_("Features"));
+    page_list->add(_("Flight Model"));
+    page_list->add(_("Freeze"));
+    page_list->add(_("Initial Position"));
+    page_list->add(_("Rendering"));
+    page_list->add(_("Time"));
+	std::string str;
+	str = "Net 网络";
+	const char* p = str.c_str();
+	//char *pData = new char[str.length()+1];
+   // strcpy(pData,p);
+	
+    page_list->add(p);
+    page_list->add(_("Input/Output"));
+    page_list->add(_("Avionics"));
+    page_list->add(_("Properties"));
+    page_list->add(_("Debugging"));
+    page_list->add(_("Environment"));
+    page_list->add(_("Weather"));
+    page_list->add(_("Clouds"));
 
     main_window->size_range( 640, 480 );
     page_list->select(1);
@@ -276,9 +247,7 @@ Advanced::init()
 void
 Advanced::fg_browser_cb()
 {
-	char* pGB = "云";
-	char* pUTF8 = G2U(pGB);
-    char* p = fl_file_chooser(pUTF8, 0, browser->value(), 0); //_("Select browser")
+    char* p = fl_file_chooser(_("Select browser"), 0, browser->value(), 0);
     if (p != 0)
         browser->value( p );
 }
@@ -333,9 +302,9 @@ Advanced::cloud_layer_cb()
 void
 Advanced::fg_config_cb()
 {
-	char* pGB = "选择一个首选项文件";
-	char* UTF8 = G2U(pGB);
-    char* p = fl_file_chooser(UTF8,_("XML Files(*.xml)"), config->value(), 0 );  //_("Select a preferences file")
+    char* p = fl_file_chooser( _("Select a preferences file"),
+                               _("XML Files(*.xml)"),
+                               config->value(), 0 );
     if (p != 0)
         config->value( p );
 }
@@ -360,13 +329,13 @@ Advanced::random_wind_cb()
 void
 Advanced::ai_models_cb()
 {
-    if ( ai_models->value() == 0 )
-    {
-        ai_traffic->value(0);
-        ai_traffic->deactivate();
-    }
-    else
-    {
-        ai_traffic->activate();
-    }
+    //if ( ai_models->value() == 0 )
+    //{
+    //    ai_traffic->value(0);
+    //    ai_traffic->deactivate();
+    //}
+    //else
+    //{
+    //    ai_traffic->activate();
+    //}
 }

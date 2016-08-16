@@ -120,8 +120,14 @@ Wizard::write_fgfsrc( Fl_Preferences &prefs, std::ostream& os, const char* pfx )
     int iVal, iVal2;
     double dVal;
 
+	//Situation  ּ״ַי
+    if (prefs.get( "Situation_one", iVal, 0 ) && iVal)  
+        os << pfx << "--Situation_one";
+    if (prefs.get( "Situation_two", iVal, 0 ) && iVal)  
+        os << pfx << "--Situation_two";
+
     // Features - only set non-default values.
-    if (prefs.get( "show_console", iVal, 0 ) && iVal)
+    if (prefs.get( "show_console", iVal, 0 ) && iVal)   
         os << pfx << "--console";
     if (prefs.get( "splash_screen", iVal, 1 ) && !iVal)
         os << pfx << "--disable-splash-screen";

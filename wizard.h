@@ -122,6 +122,12 @@ private:
   Fl_Input *parkpos_;
   void cb_Advanced_i(Fl_Button*, void*);
   static void cb_Advanced(Fl_Button*, void*);
+  Fl_Check_Button *Situation_one;  //特请1声明加变量定义
+  void cb_Situation_one_i(Fl_Check_Button*, void*);
+  static void cb_Situation_one(Fl_Check_Button*, void*);  //  特请2
+  Fl_Check_Button *Situation_two;  //特请2声明加变量定义
+  void cb_Situation_two_i(Fl_Check_Button*, void*);
+  static void cb_Situation_two(Fl_Check_Button*, void*);  //  特请2
   Fl_Check_Button *show_cmd_line;
   void cb_show_cmd_line_i(Fl_Check_Button*, void*);
   static void cb_show_cmd_line(Fl_Check_Button*, void*);
@@ -327,6 +333,8 @@ private:
   void save_basic_options( Fl_Preferences &p ); 
   void display_scenarii(); 
   void deselect_all_scenarii_cb(); 
+  void Situation_one_cb(); //特请1的回调函数的声明
+  void Situation_two_cb(); //特请2的回调函数的声明
   void show_cmd_line_cb(); 
   void show_console_cb(); 
   void show_3d_preview_cb(); 

@@ -31,6 +31,7 @@
 #include "AirportTable.h"
 #include "apt_dat.h"
 #include "i18n.h"
+#include "G2U.h"
 
 using std::string;
 using std::vector;
@@ -104,6 +105,10 @@ void
 AirportTable::draw_cell( TableContext context,
 			 int R, int C, int X, int Y, int W, int H )
 {
+	char* pGB ="机场 id";
+	char* UTF8 = G2U(pGB);
+	char* pGB1 ="机场名字";
+	char* UTF81 = G2U(pGB1);
     switch (context)
     {
     case CONTEXT_STARTPAGE:
@@ -119,7 +124,7 @@ AirportTable::draw_cell( TableContext context,
         fl_font( FL_HELVETICA /*| FL_BOLD*/, 12 );
         fl_push_clip( X, Y, W, H );
         {
-            static char* headers[2] = { _("ICAO Id"), _("Name") };
+            static char* headers[2] = {UTF8 , UTF81 };  // _("ICAO Id"),_("Name")
             fl_draw_box( FL_THIN_UP_BOX, X, Y, W, H,
 			 col_header_color() );
             fl_color(FL_BLACK);

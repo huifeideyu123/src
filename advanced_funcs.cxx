@@ -218,7 +218,7 @@ Advanced::init()
     if ( io_generic_file->size() )
         io_generic_file->value(0);
 
-    set_choice( fdm, "automatic selection" );//好像不能改（set_choice这个函数）
+    set_choice( fdm, "automatic selection" );
     set_choice( log_level, "alert" );
 
 
@@ -276,7 +276,9 @@ Advanced::init()
 void
 Advanced::fg_browser_cb()
 {
-    char* p = fl_file_chooser(_("Select browser"), 0, browser->value(), 0);
+	char* pGB = "云";
+	char* pUTF8 = G2U(pGB);
+    char* p = fl_file_chooser(pUTF8, 0, browser->value(), 0); //_("Select browser")
     if (p != 0)
         browser->value( p );
 }
@@ -331,9 +333,9 @@ Advanced::cloud_layer_cb()
 void
 Advanced::fg_config_cb()
 {
-    char* p = fl_file_chooser( _("Select a preferences file"),
-                               _("XML Files(*.xml)"),
-                               config->value(), 0 );
+	char* pGB = "选择一个首选项文件";
+	char* UTF8 = G2U(pGB);
+    char* p = fl_file_chooser(UTF8,_("XML Files(*.xml)"), config->value(), 0 );  //_("Select a preferences file")
     if (p != 0)
         config->value( p );
 }

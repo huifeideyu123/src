@@ -22,7 +22,6 @@
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
-#include "G2U.h"
 #endif
 
 #include <string>
@@ -56,6 +55,7 @@
 #include <osg/MatrixTransform>
 #include <osgDB/ReadFile>
 
+#include "G2U.h"
 #include "wizard.h"
 #include "advanced.h"
 #include "logwin.h"
@@ -249,6 +249,8 @@ static const char* about_text = N_("\
 void
 Wizard::reset()
 {
+	char* pGB ="下一页";
+	char* UTF8 = G2U(pGB);
     const int buflen = FL_PATH_MAX;
     char buf[ buflen ];
 
@@ -399,9 +401,9 @@ Wizard::reset()
         next->activate();
         page[1]->show();
     }
-    next->label( _("Next") );
+    next->label(UTF8);  //_("Next")
 
-    prefs.get("show_cmd_line", iVal, 0);
+    prefs.get("show_cmd_line", iVal, 0); 
     show_cmd_line->value(iVal);
     if ( iVal )
         text->show();
@@ -795,8 +797,8 @@ Wizard::preview_aircraft(bool desel_mru)
         return;
     }
 
-    aircraft_status->value( _( data->status.c_str() ) );
-    aircraft_author->value( data->author.c_str() );
+    //aircraft_status->value( _( data->status.c_str() ) );
+    //aircraft_author->value( data->author.c_str() );
     aircraft_location->value( data->root.c_str() );
 
     next->activate();
@@ -805,6 +807,8 @@ Wizard::preview_aircraft(bool desel_mru)
 void
 Wizard::next_cb()
 {
+	char* pGB = "运行";
+	char* UTF8 = G2U(pGB);
     prev->activate();
 
     if (wiz->value() == page[0])
@@ -937,15 +941,17 @@ Wizard::next_cb()
         ostr << fg_exe_->value() << "\n  ";
         write_fgfsrc( prefs, ostr, "\n  " );
         text->buffer()->text( ostr.str().c_str() );
-        next->label( _("Run") );
+        next->label( UTF8);  //_("Run")
     }
 }
 
 void
 Wizard::prev_cb()
 {
+	char* pGB = "下一页";
+	char* UTF8 = G2U(pGB);
     next->activate();
-    next->label( _("Next") );
+    next->label(UTF8);  //   _("Next") 
     if (wiz->value() == page[2])
     {
         aircraft_mru_update();
@@ -963,13 +969,12 @@ Wizard::prev_cb()
 
 void
 Wizard::defaults_cb()
-{   char* pGB = "要重置当前参数";
-	char* UTF8 = G2U(pGB);
+{  
 	char* pGB1 = "中止";
 	char* UTF81 = G2U(pGB1);
 	char* pGB2 = "重置";
 	char* UTF82 = G2U(pGB2);
-    int r = fl_choice( UTF8,UTF81 ,UTF82 , 0 );  // _("About to reset current parameters"),  _("Abort"), _("Reset")
+    int r = fl_choice(_("About to reset current parameters"),UTF81 ,UTF82 , 0 );  // _("Abort"), _("Reset")
     if (!r)
         return;
     if (adv == 0)
@@ -2034,7 +2039,11 @@ Wizard::update_basic_options( Fl_Preferences &p )
     p.get("autovisibility", iVal, 0);
     auto_visibility->value(iVal);
 	
-    p.get("show_console", iVal, 0);
+	p.get("Situation_one", iVal, 0);   
+	Situation_one->value(iVal);        //特情1勾选
+	p.get("Situation_two", iVal, 0);   
+	Situation_two->value(iVal);      //特情2勾选
+    p.get("show_console", iVal, 0); 
     show_console->value(iVal);
 
     atlas->value(0);
@@ -2200,6 +2209,24 @@ Wizard::deselect_all_scenarii_cb()
     scenarii_help->tooltip( _("Select a scenario to display its description") );
 
     prefs.set("scenario-count", 0);
+    update_options();
+}
+
+void
+Wizard::Situation_one_cb() //特情1
+{
+   /* if (Situation_one->value() )
+        text->show();
+    else
+        text->hide();*/
+    prefs.set("Situation_one", Situation_one->value());
+	update_options();
+}
+
+void
+Wizard::Situation_two_cb() //特情2还
+{
+    prefs.set("Situation_two", Situation_two->value());
     update_options();
 }
 

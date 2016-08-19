@@ -939,7 +939,7 @@ Wizard::next_cb()
     else if (wiz->value() == page[3])
     {
         std::ostringstream ostr;
-        ostr << fg_exe_->value() << "\n  ";
+        ostr << fg_exe_->value() << "\n  ";  //函数原型const char* value() const {return value_;}
         write_fgfsrc( prefs, ostr, "\n  " );
         text->buffer()->text( ostr.str().c_str() );
 		char* pGB = "运行";
@@ -951,9 +951,9 @@ Wizard::next_cb()
 void
 Wizard::prev_cb()
 {
-    next->activate();
-			char* pGB = "下一步";
-	    char* PUTF8 = G2U(pGB);
+    next->activate();   
+	char* pGB = "下一步";
+	char* PUTF8 = G2U(pGB);
     next->label( _(PUTF8) );
     if (wiz->value() == page[2])
     {
@@ -962,7 +962,15 @@ Wizard::prev_cb()
     wiz->prev();
     if (wiz->value() == page[0])
     {
-        prev->deactivate();
+        prev->deactivate();   //  禁用'主界面'的‘上一页’    
+		//std::ostringstream ostr;  //这里自己添加的 暂时没用
+  //      ostr << fg_exe_->value() << "\n  ";  //const char* value() const {return value_;}
+  //      write_fgfsrc( prefs, ostr, "\n  " );
+  //      text->buffer()->text( ostr.str().c_str() );
+		//char* pGB = "运行";
+	 //   char* PUTF8 = G2U(pGB);
+  //      prev->label( PUTF8 );
+
     }
     else if (wiz->value() == page[1])
     {
@@ -973,7 +981,11 @@ Wizard::prev_cb()
 void
 Wizard::defaults_cb()
 {
-    int r = fl_choice( _("About to reset current parameters"), _("Abort"), _("Reset"), 0 );
+	char* pGB1 = "重置";
+	char* UTF81 = G2U(pGB1);
+	char* pGB2 = "中止";
+	char* UTF82 = G2U(pGB2);
+    int r = fl_choice( _("About to reset current parameters"),UTF82 , UTF81, 0 );  // _("Abort"), _("Reset")
     if (!r)
         return;
     if (adv == 0)

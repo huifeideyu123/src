@@ -5,6 +5,8 @@
 #include <config.h>
 #endif
 #include "advanced.h"
+#include "wizard.h"
+#include "G2U.h"
 #include <string.h>
 
 void Advanced::cb_page_list_i(Fl_Browser* o, void*) {
@@ -707,7 +709,9 @@ void Advanced::cb_cloud_transition_(Fl_Value_Input* o, void* v) {
 }
 
 Advanced::Advanced(Fl_Preferences& p):prefs(p) {
-  { main_window = new Fl_Double_Window(640, 480, _("Advanced Options"));
+  { char* pGB = "高级选项";
+    char* pUTF8 = G2U(pGB);
+	main_window = new Fl_Double_Window(640, 480, pUTF8); //_("Advanced Options")
     main_window->labelsize(12);
     main_window->user_data((void*)(this));
     { page_list = new Fl_Browser(0, 0, 120, 430);
@@ -720,10 +724,14 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       Fl_Group::current()->resizable(o);
     } // Fl_Box* o
     { Fl_Group* o = new Fl_Group(0, 435, 640, 45);
-      { button[1] = new Fl_Button(565, 450, 70, 25, _("Cancel"));
+      { pGB = "取消";
+        pUTF8 = G2U(pGB);
+		button[1] = new Fl_Button(565, 450, 70, 25,pUTF8); //_("Cancel")
         button[1]->labelsize(12);
       } // Fl_Button* button[1]
-      { button[0] = new Fl_Button(490, 450, 70, 25, _("OK"));
+      { pGB = "确定";
+        pUTF8 = G2U(pGB);
+		button[0] = new Fl_Button(490, 450, 70, 25,pUTF8); //_("OK")
         button[0]->labelsize(12);
       } // Fl_Button* button[0]
       { Fl_Box* o = new Fl_Box(20, 435, 460, 15);
@@ -731,16 +739,22 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Box* o
       o->end();
     } // Fl_Group* o
-    { page[0] = new Fl_Group(150, 0, 490, 430, _("General"));
+    { pGB = "一般";
+      pUTF8 = G2U(pGB);
+	  page[0] = new Fl_Group(150, 0, 490, 430, pUTF8);//_("General")
       page[0]->labelfont(1);
       page[0]->labelsize(16);
       page[0]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[0]->hide();
-      { lang = new Fl_Input(250, 250, 80, 25, _("Language:"));
+      { pGB = "语言";
+        pUTF8 = G2U(pGB);
+		lang = new Fl_Input(250, 250, 80, 25, pUTF8);  //_("Language:")
         lang->labelsize(12);
         lang->textsize(12);
       } // Fl_Input* lang
-      { browser = new Fl_Input(250, 280, 355, 25, _("Browser:"));
+      { pGB = "浏览器";
+        pUTF8 = G2U(pGB);
+		browser = new Fl_Input(250, 280, 355, 25, pUTF8);// _("Browser:")
         browser->labelsize(12);
         browser->textsize(12);
       } // Fl_Input* browser
@@ -748,7 +762,9 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         o->labelsize(12);
         o->callback((Fl_Callback*)cb_);
       } // Fl_Button* o
-      { config = new Fl_Input(250, 310, 355, 25, _("Config:"));
+      { pGB = "配置";
+        pUTF8 = G2U(pGB);
+		config = new Fl_Input(250, 310, 355, 25, pUTF8);  //_("Config:")
         config->tooltip(_("Path to additional XML properties file"));
         config->labelsize(12);
         config->textsize(12);
@@ -757,32 +773,46 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         o->labelsize(12);
         o->callback((Fl_Callback*)cb_1);
       } // Fl_Button* o
-      { fg_exe_ = new Fl_Output(250, 25, 385, 25, _("Executable:"));
+      { pGB = "可执行";
+        pUTF8 = G2U(pGB);
+		fg_exe_ = new Fl_Output(250, 25, 385, 25,pUTF8 ); //_("Executable:")
         fg_exe_->labelsize(12);
         fg_exe_->textsize(12);
       } // Fl_Output* fg_exe_
-      { fg_root_ = new Fl_Output(250, 55, 385, 25, _("FG_ROOT:"));
+      { pGB = "根目录";
+        pUTF8 = G2U(pGB);
+		fg_root_ = new Fl_Output(250, 55, 385, 25,pUTF8);  //_("FG_ROOT:")
         fg_root_->labelsize(12);
         fg_root_->textsize(12);
       } // Fl_Output* fg_root_
-      { fg_scenery_ = new Fl_Output(250, 85, 385, 25, _("FG_SCENERY:"));
+      { pGB = "场景";
+        pUTF8 = G2U(pGB);
+		fg_scenery_ = new Fl_Output(250, 85, 385, 25, pUTF8);  //_("FG_SCENERY:")
         fg_scenery_->labelsize(12);
         fg_scenery_->textsize(12);
       } // Fl_Output* fg_scenery_
-      { ts_dir = new Fl_Input(250, 115, 385, 25, _("TerraSync directory:"));
+      { pGB = "TerraSync目录:";
+        pUTF8 = G2U(pGB);
+		ts_dir = new Fl_Input(250, 115, 385, 25,pUTF8); // _("TerraSync directory:")
         ts_dir->tooltip(_("Leave this field empty in order to use the default path."));
         ts_dir->labelsize(12);
         ts_dir->textsize(12);
       } // Fl_Input* ts_dir
-      { airport_ = new Fl_Output(250, 145, 240, 25, _("Airport:"));
+      { pGB = "机场";
+        pUTF8 = G2U(pGB);
+		airport_ = new Fl_Output(250, 145, 240, 25,pUTF8);  //_("Airport:")
         airport_->labelsize(12);
         airport_->textsize(12);
       } // Fl_Output* airport_
-      { runway_ = new Fl_Output(555, 145, 80, 25, _("Runway:"));
+      { pGB = "跑道";
+        pUTF8 = G2U(pGB);
+		runway_ = new Fl_Output(555, 145, 80, 25,pUTF8);  //_("Runway:")
         runway_->labelsize(12);
         runway_->textsize(12);
       } // Fl_Output* runway_
-      { aircraft_ = new Fl_Output(250, 175, 240, 25, _("Aircraft:"));
+      { pGB = "飞机";
+        pUTF8 = G2U(pGB);
+		aircraft_ = new Fl_Output(250, 175, 240, 25, pUTF8);//_("Aircraft:")
         aircraft_->labelsize(12);
         aircraft_->textsize(12);
       } // Fl_Output* aircraft_
@@ -791,38 +821,52 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Box* o
       page[0]->end();
     } // Fl_Group* page[0]
-    { page[1] = new Fl_Group(150, 0, 490, 430, _("Features"));
+    { pGB = "特性";
+      pUTF8 = G2U(pGB);
+      page[1] = new Fl_Group(150, 0, 490, 430,pUTF8);  //_("Features")
       page[1]->labelfont(1);
       page[1]->labelsize(16);
       page[1]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-      { specular_highlight = new Fl_Check_Button(175, 50, 160, 25, _("Specular highlight"));
+      { pGB = "高光";
+        pUTF8 = G2U(pGB);
+		specular_highlight = new Fl_Check_Button(175, 50, 160, 25,pUTF8 ); //_("Specular highlight")
         specular_highlight->tooltip(_("Enable specular reflections on textured objects"));
         specular_highlight->down_box(FL_DOWN_BOX);
         specular_highlight->labelsize(12);
       } // Fl_Check_Button* specular_highlight
-      { splash_screen = new Fl_Check_Button(175, 80, 160, 25, _("Splash Screen"));
+      { pGB = "闪屏";
+        pUTF8 = G2U(pGB);
+		splash_screen = new Fl_Check_Button(175, 80, 160, 25, pUTF8);//_("Splash Screen")
         splash_screen->tooltip(_("Display splash screen at startup"));
         splash_screen->down_box(FL_DOWN_BOX);
         splash_screen->value(1);
         splash_screen->labelsize(12);
       } // Fl_Check_Button* splash_screen
-      { mouse_pointer = new Fl_Check_Button(175, 110, 160, 25, _("Mouse Pointer"));
+      { pGB = "鼠标指针";
+        pUTF8 = G2U(pGB);
+		mouse_pointer = new Fl_Check_Button(175, 110, 160, 25,pUTF8);  //_("Mouse Pointer")
         mouse_pointer->tooltip(_("Enable extra mouse pointer"));
         mouse_pointer->down_box(FL_DOWN_BOX);
         mouse_pointer->labelsize(12);
       } // Fl_Check_Button* mouse_pointer
-      { random_objects = new Fl_Check_Button(175, 140, 160, 25, _("Random Objects"));
+      { pGB = "随机对象";
+        pUTF8 = G2U(pGB);
+		random_objects = new Fl_Check_Button(175, 140, 160, 25,pUTF8);  //_("Random Objects")
         random_objects->tooltip(_("Enable random scenery objects"));
         random_objects->down_box(FL_DOWN_BOX);
         random_objects->labelsize(12);
       } // Fl_Check_Button* random_objects
-      { panel = new Fl_Check_Button(345, 50, 140, 25, _("Panel"));
+      { pGB = "委员会";
+        pUTF8 = G2U(pGB);
+		panel = new Fl_Check_Button(345, 50, 140, 25, pUTF8); //_("Panel")
         panel->tooltip(_("Enable the instrument panel"));
         panel->down_box(FL_DOWN_BOX);
         panel->value(1);
         panel->labelsize(12);
       } // Fl_Check_Button* panel
-      { sound = new Fl_Check_Button(345, 80, 140, 25, _("Sound"));
+      { pGB = "声音";
+        pUTF8 = G2U(pGB);
+		sound = new Fl_Check_Button(345, 80, 140, 25,pUTF8);  //_("Sound")
         sound->tooltip(_("Enable sound effects"));
         sound->down_box(FL_DOWN_BOX);
         sound->value(1);
@@ -834,77 +878,101 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         hud->labelsize(12);
         hud->callback((Fl_Callback*)cb_hud);
       } // Fl_Check_Button* hud
-      { antialias_hud = new Fl_Check_Button(360, 140, 130, 25, _("Anti-alias HUD"));
+      { pGB = "Anti-alias HUD";  //没翻译
+        pUTF8 = G2U(pGB);
+		antialias_hud = new Fl_Check_Button(360, 140, 130, 25, pUTF8);//_("Anti-alias HUD")
         antialias_hud->tooltip(_("Enable anti-aliased HUD"));
         antialias_hud->down_box(FL_DOWN_BOX);
         antialias_hud->labelsize(12);
         antialias_hud->deactivate();
       } // Fl_Check_Button* antialias_hud
-      {
-		  //auto_coordination = new Fl_Check_Button(345, 200, 140, 25, _("Auto-coordination"));
-    //    auto_coordination->tooltip(_("Enable auto-coordinated turns."));
-    //    auto_coordination->down_box(FL_DOWN_BOX);
-    //    auto_coordination->labelsize(12);
+      { pGB = "自动协调";
+        pUTF8 = G2U(pGB);
+		auto_coordination = new Fl_Check_Button(345, 200, 140, 25,pUTF8);//_("Auto-coordination")
+        auto_coordination->tooltip(_("Enable auto-coordinated turns."));
+        auto_coordination->down_box(FL_DOWN_BOX);
+        auto_coordination->labelsize(12);
       } // Fl_Check_Button* auto_coordination
-      { random_trees = new Fl_Check_Button(175, 170, 160, 25, _("Random Trees"));
+      { pGB = "随机森林";
+        pUTF8 = G2U(pGB);
+		random_trees = new Fl_Check_Button(175, 170, 160, 25,pUTF8);  //_("Random Trees")
         random_trees->down_box(FL_DOWN_BOX);
         random_trees->labelsize(12);
       } // Fl_Check_Button* random_trees
-      {
-		  //horizon_effect = new Fl_Check_Button(175, 200, 160, 25, _("Horizon effect"));
-    //    horizon_effect->tooltip(_("Enable celestial body growth illusion near the horizon"));
-    //    horizon_effect->down_box(FL_DOWN_BOX);
-    //    horizon_effect->labelsize(12);
+      { pGB = "地平线效应";
+        pUTF8 = G2U(pGB);
+		horizon_effect = new Fl_Check_Button(175, 200, 160, 25,pUTF8);// _("Horizon effect")
+        horizon_effect->tooltip(_("Enable celestial body growth illusion near the horizon"));
+        horizon_effect->down_box(FL_DOWN_BOX);
+        horizon_effect->labelsize(12);
       } // Fl_Check_Button* horizon_effect
-      { 
-		  //enhanced_lighting = new Fl_Check_Button(175, 230, 160, 25, _("Enhanced lighting"));
-    //    enhanced_lighting->tooltip(_("Enable enhanced runway lighting"));
-    //    enhanced_lighting->down_box(FL_DOWN_BOX);
-    //    enhanced_lighting->labelsize(12);
+      { pGB = "强化照明";
+        pUTF8 = G2U(pGB);
+		enhanced_lighting = new Fl_Check_Button(175, 230, 160, 25,pUTF8); //_("Enhanced lighting")
+        enhanced_lighting->tooltip(_("Enable enhanced runway lighting"));
+        enhanced_lighting->down_box(FL_DOWN_BOX);
+        enhanced_lighting->labelsize(12);
       } // Fl_Check_Button* enhanced_lighting
-      { distance_attenuation = new Fl_Check_Button(175, 260, 160, 25, _("Distance attenuation"));
+      { pGB = "距离衰减";
+        pUTF8 = G2U(pGB);
+		distance_attenuation = new Fl_Check_Button(175, 260, 160, 25,pUTF8);  //_("Distance attenuation")
         distance_attenuation->tooltip(_("Enable runway light distance attenuation"));
         distance_attenuation->down_box(FL_DOWN_BOX);
         distance_attenuation->labelsize(12);
       } // Fl_Check_Button* distance_attenuation
-      { hud_3d = new Fl_Check_Button(345, 170, 140, 25, _("Hud-3D"));
+      { pGB = "Hud-3D";
+        pUTF8 = G2U(pGB);
+		hud_3d = new Fl_Check_Button(345, 170, 140, 25,pUTF8);  //_("Hud-3D")
         hud_3d->tooltip(_("Enable 3D HUD"));
         hud_3d->down_box(FL_DOWN_BOX);
         hud_3d->labelsize(12);
       } // Fl_Check_Button* hud_3d
-      { failure = new Fl_Check_Button(485, 50, 150, 25, _("Failures"));
+      { pGB = "失败";
+        pUTF8 = G2U(pGB);
+		failure = new Fl_Check_Button(485, 50, 150, 25,pUTF8);  //_("Failures")
         failure->down_box(FL_DOWN_BOX);
         failure->labelsize(12);
         failure->callback((Fl_Callback*)cb_failure);
       } // Fl_Check_Button* failure
-      { failure_electrical = new Fl_Check_Button(505, 75, 130, 25, _("electrical"));
+      { pGB = "电";
+        pUTF8 = G2U(pGB);
+		failure_electrical = new Fl_Check_Button(505, 75, 130, 25,pUTF8);  //_("electrical")
         failure_electrical->down_box(FL_DOWN_BOX);
         failure_electrical->labelsize(12);
         failure_electrical->deactivate();
       } // Fl_Check_Button* failure_electrical
-      { failure_pitot = new Fl_Check_Button(505, 100, 130, 25, _("pitot"));
+      { pGB = "皮托管";
+        pUTF8 = G2U(pGB);
+		failure_pitot = new Fl_Check_Button(505, 100, 130, 25,pUTF8); //_("pitot")
         failure_pitot->down_box(FL_DOWN_BOX);
         failure_pitot->labelsize(12);
         failure_pitot->deactivate();
       } // Fl_Check_Button* failure_pitot
-      { failure_static = new Fl_Check_Button(505, 125, 130, 25, _("static"));
+      { pGB = "静态";
+        pUTF8 = G2U(pGB);
+		failure_static = new Fl_Check_Button(505, 125, 130, 25,pUTF8);  //_("static")
         failure_static->down_box(FL_DOWN_BOX);
         failure_static->labelsize(12);
         failure_static->deactivate();
       } // Fl_Check_Button* failure_static
-      { failure_vacuum = new Fl_Check_Button(505, 150, 130, 25, _("vacuum"));
+      { pGB = "真空";   
+        pUTF8 = G2U(pGB);
+		failure_vacuum = new Fl_Check_Button(505, 150, 130, 25,pUTF8 );  //_("vacuum")
         failure_vacuum->down_box(FL_DOWN_BOX);
         failure_vacuum->labelsize(12);
         failure_vacuum->deactivate();
       } // Fl_Check_Button* failure_vacuum
-      { 
-		  //ai_models = new Fl_Check_Button(345, 230, 140, 25, _("AI Models"));
-    //    ai_models->tooltip(_("Enable AI traffic"));
-    //    ai_models->down_box(FL_DOWN_BOX);
-    //    ai_models->labelsize(12);
-    //    ai_models->callback((Fl_Callback*)cb_ai_models);
+      { pGB = "人工智能模型"; 
+        pUTF8 = G2U(pGB);
+		ai_models = new Fl_Check_Button(345, 230, 140, 25,pUTF8);//_("AI Models")
+        ai_models->tooltip(_("Enable AI traffic"));
+        ai_models->down_box(FL_DOWN_BOX);
+        ai_models->labelsize(12);
+        ai_models->callback((Fl_Callback*)cb_ai_models);
       } // Fl_Check_Button* ai_models
-      { ai_traffic = new Fl_Check_Button(360, 260, 140, 25, _("AI Traffic"));
+      { pGB = "人工智能交通"; 
+        pUTF8 = G2U(pGB);
+		ai_traffic = new Fl_Check_Button(360, 260, 140, 25, pUTF8);  //_("AI Traffic")
         ai_traffic->down_box(FL_DOWN_BOX);
         ai_traffic->labelsize(12);
       } // Fl_Check_Button* ai_traffic
@@ -913,12 +981,16 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Box* o
       page[1]->end();
     } // Fl_Group* page[1]
-    { page[2] = new Fl_Group(150, 0, 490, 430, _("Flight Model"));
+    { pGB = "飞行模式"; 
+      pUTF8 = G2U(pGB);
+	  page[2] = new Fl_Group(150, 0, 490, 430, pUTF8 );  //_("Flight Model")
       page[2]->labelfont(1);
       page[2]->labelsize(16);
       page[2]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[2]->hide();
-      { fdm = new Fl_Choice(270, 45, 140, 25, _("FDM:"));
+      { pGB = "FDM"; 
+        pUTF8 = G2U(pGB);
+		fdm = new Fl_Choice(270, 45, 140, 25,pUTF8 );  //_("FDM:") 
         fdm->tooltip(_("Core Flight Dynamics Model"));
         fdm->down_box(FL_BORDER_BOX);
         fdm->labelsize(12);
@@ -933,13 +1005,17 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         }
         fdm->menu(menu_fdm);
       } // Fl_Choice* fdm
-      { notrim = new Fl_Check_Button(290, 75, 85, 25, _("No Trim"));
+      { pGB = "不修剪"; 
+        pUTF8 = G2U(pGB);
+		notrim = new Fl_Check_Button(290, 75, 85, 25, pUTF8);  //  _("No Trim")
         notrim->tooltip(_("Do not attempt to trim the model"));
         notrim->down_box(FL_DOWN_BOX);
         notrim->labelsize(12);
         notrim->deactivate();
       } // Fl_Check_Button* notrim
-      { model_hz = new Fl_Value_Input(270, 105, 105, 25, _("Model Hz:"));
+      { pGB = "模型赫兹"; 
+        pUTF8 = G2U(pGB);
+		model_hz = new Fl_Value_Input(270, 105, 105, 25, pUTF8);  // _("Model Hz:")
         model_hz->tooltip(_("Run the FDM at this rate (iterations per second)"));
         model_hz->labelsize(12);
         model_hz->minimum(1);
@@ -948,8 +1024,10 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         model_hz->value(120);
         model_hz->textsize(12);
       } // Fl_Value_Input* model_hz
-      { speed = new Fl_Value_Input(270, 135, 105, 25, _("Speed:"));
-        speed->tooltip(_("Run FDM faster than real time"));
+      { pGB = "速度"; 
+        pUTF8 = G2U(pGB);
+		speed = new Fl_Value_Input(270, 135, 105, 25,pUTF8);  //_("Speed:")
+        speed->tooltip(_("Run FDM faster than real time")); 
         speed->labelsize(12);
         speed->minimum(1);
         speed->maximum(1000);
@@ -958,14 +1036,18 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         speed->textsize(12);
       } // Fl_Value_Input* speed
       { Fl_Group* o = new Fl_Group(220, 170, 155, 50);
-        { on_ground = new Fl_Round_Button(270, 170, 105, 25, _("On Ground"));
+        { pGB = "在地面"; 
+          pUTF8 = G2U(pGB);
+		  on_ground = new Fl_Round_Button(270, 170, 105, 25,pUTF8); //_("On Ground")
           on_ground->tooltip(_("Start at ground level"));
           on_ground->type(102);
           on_ground->down_box(FL_ROUND_DOWN_BOX);
           on_ground->value(1);
           on_ground->labelsize(12);
         } // Fl_Round_Button* on_ground
-        { in_air = new Fl_Round_Button(270, 195, 105, 25, _("In Air"));
+        { pGB = "在空中"; 
+          pUTF8 = G2U(pGB);
+		  in_air = new Fl_Round_Button(270, 195, 105, 25,pUTF8); //_("In Air")
           in_air->tooltip(_("Start in the air"));
           in_air->type(102);
           in_air->down_box(FL_ROUND_DOWN_BOX);
@@ -978,21 +1060,29 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Box* o
       page[2]->end();
     } // Fl_Group* page[2]
-    { page[3] = new Fl_Group(150, 0, 490, 435, _("Freeze"));
+    { pGB = "冻结"; 
+      pUTF8 = G2U(pGB);
+	  page[3] = new Fl_Group(150, 0, 490, 435,pUTF8);  //_("Freeze")
       page[3]->labelfont(1);
       page[3]->labelsize(16);
       page[3]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[3]->hide();
-      { freeze = new Fl_Check_Button(175, 35, 265, 25, _("Freeze"));
+      { pGB = "冻结"; 
+        pUTF8 = G2U(pGB);
+		freeze = new Fl_Check_Button(175, 35, 265, 25,pUTF8 );  //_("Freeze")
         freeze->tooltip(_("Start paused"));
         freeze->down_box(FL_DOWN_BOX);
         freeze->labelsize(12);
       } // Fl_Check_Button* freeze
-      { fuel_freeze = new Fl_Check_Button(175, 65, 265, 25, _("Fuel Freeze"));
+      { pGB = "燃料冻结"; 
+        pUTF8 = G2U(pGB);
+		fuel_freeze = new Fl_Check_Button(175, 65, 265, 25, pUTF8);  //_("Fuel Freeze")
         fuel_freeze->down_box(FL_DOWN_BOX);
         fuel_freeze->labelsize(12);
       } // Fl_Check_Button* fuel_freeze
-      { clock_freeze = new Fl_Check_Button(175, 95, 265, 25, _("Clock Freeze"));
+      { pGB = "时间冻结"; 
+        pUTF8 = G2U(pGB);
+		clock_freeze = new Fl_Check_Button(175, 95, 265, 25,  pUTF8);  //_("Clock Freeze")
         clock_freeze->down_box(FL_DOWN_BOX);
         clock_freeze->labelsize(12);
       } // Fl_Check_Button* clock_freeze
@@ -1001,53 +1091,73 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Box* o
       page[3]->end();
     } // Fl_Group* page[3]
-    { page[4] = new Fl_Group(150, 0, 490, 430, _("Initial Position"));
+    { pGB = "初始位置"; 
+      pUTF8 = G2U(pGB);
+	  page[4] = new Fl_Group(150, 0, 490, 430,pUTF8 );  //_("Initial Position")
       page[4]->labelfont(1);
       page[4]->labelsize(16);
       page[4]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[4]->hide();
-      { lon = new Fl_Input(245, 35, 150, 25, _("Longitude:"));
+      { pGB = "经度"; 
+        pUTF8 = G2U(pGB);
+		lon = new Fl_Input(245, 35, 150, 25,pUTF8);  //_("Longitude:") 
         lon->tooltip(_("Initial longitude, west is negative"));
         lon->labelsize(12);
         lon->textsize(12);
       } // Fl_Input* lon
-      { lat = new Fl_Input(245, 65, 150, 25, _("Latitude:"));
+      { pGB = "纬度"; 
+        pUTF8 = G2U(pGB);
+		lat = new Fl_Input(245, 65, 150, 25,pUTF8 );  //_("Latitude:")
         lat->tooltip(_("Initial latitude, south is negative"));
         lat->labelsize(12);
         lat->textsize(12);
       } // Fl_Input* lat
-      { altitude = new Fl_Float_Input(245, 95, 150, 25, _("Altitude:"));
+      { pGB = "高度"; 
+        pUTF8 = G2U(pGB);
+		altitude = new Fl_Float_Input(245, 95, 150, 25,pUTF8 );   //_("Altitude:")
         altitude->tooltip(_("Initial altitude in feet"));
         altitude->type(1);
         altitude->labelsize(12);
         altitude->textsize(12);
       } // Fl_Float_Input* altitude
-      { vc = new Fl_Float_Input(245, 215, 150, 25, _("Airspeed:"));
+      { pGB = "空速"; 
+        pUTF8 = G2U(pGB);
+		vc = new Fl_Float_Input(245, 215, 150, 25,pUTF8);  //_("Airspeed:")
         vc->tooltip(_("Initial airspeed in knots"));
         vc->type(1);
         vc->labelsize(12);
         vc->textsize(12);
       } // Fl_Float_Input* vc
-      { uBody = new Fl_Input(245, 265, 150, 25, _("uBody:"));
+      { pGB = "uBody"; 
+        pUTF8 = G2U(pGB);
+		uBody = new Fl_Input(245, 265, 150, 25,pUTF8 );  //_("uBody:")
         uBody->labelsize(12);
         uBody->textsize(12);
       } // Fl_Input* uBody
-      { vBody = new Fl_Input(245, 295, 150, 25, _("vBody:"));
+      { pGB = "vBody"; 
+        pUTF8 = G2U(pGB);
+		vBody = new Fl_Input(245, 295, 150, 25,pUTF8 );  //  _("vBody:")
         vBody->labelsize(12);
         vBody->textsize(12);
       } // Fl_Input* vBody
-      { wBody = new Fl_Input(245, 325, 150, 25, _("wBody"));
+      { pGB = "wBody"; 
+        pUTF8 = G2U(pGB);
+		wBody = new Fl_Input(245, 325, 150, 25,pUTF8 );  //_("wBody")
         wBody->labelsize(12);
         wBody->textsize(12);
       } // Fl_Input* wBody
-      { heading = new Fl_Value_Input(245, 125, 150, 25, _("Heading:"));
+      { pGB = "标题"; 
+        pUTF8 = G2U(pGB);
+		heading = new Fl_Value_Input(245, 125, 150, 25,pUTF8 );  //  _("Heading:")
         heading->tooltip(_("Initial aircraft heading (yaw) angle 0 to 360 degrees"));
         heading->labelsize(12);
         heading->maximum(360);
         heading->step(1);
         heading->textsize(12);
       } // Fl_Value_Input* heading
-      { roll = new Fl_Value_Input(245, 155, 150, 25, _("Roll:"));
+      { pGB = "滚动"; 
+        pUTF8 = G2U(pGB);
+		roll = new Fl_Value_Input(245, 155, 150, 25, pUTF8);  //  _("Roll:")
         roll->tooltip(_("Initial roll angle, (Phi)"));
         roll->labelsize(12);
         roll->minimum(-180);
@@ -1055,7 +1165,9 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         roll->step(0.1);
         roll->textsize(12);
       } // Fl_Value_Input* roll
-      { pitch = new Fl_Value_Input(245, 185, 150, 25, _("Pitch:"));
+      { pGB = "音调"; 
+        pUTF8 = G2U(pGB);
+		pitch = new Fl_Value_Input(245, 185, 150, 25,pUTF8 );  //_("Pitch:")
         pitch->tooltip(_("Initial pitch angle (Theta)"));
         pitch->labelsize(12);
         pitch->minimum(-180);
@@ -1063,31 +1175,45 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         pitch->step(0.1);
         pitch->textsize(12);
       } // Fl_Value_Input* pitch
-      { vor = new Fl_Input(530, 35, 80, 25, _("VOR:"));
+      { pGB = "甚高频全向信标";  
+        pUTF8 = G2U(pGB);
+		vor = new Fl_Input(530, 35, 80, 25, pUTF8);   // _("VOR:")
         vor->labelsize(12);
         vor->textsize(12);
       } // Fl_Input* vor
-      { ndb = new Fl_Input(530, 65, 80, 25, _("NDB:"));
+      { pGB = "全向信标";  
+        pUTF8 = G2U(pGB);
+		ndb = new Fl_Input(530, 65, 80, 25, pUTF8); //_("NDB:")
         ndb->labelsize(12);
         ndb->textsize(12);
       } // Fl_Input* ndb
-      { fix = new Fl_Input(530, 95, 80, 25, _("Fix:"));
+      { pGB = "方位";  
+        pUTF8 = G2U(pGB);
+		fix = new Fl_Input(530, 95, 80, 25, pUTF8 );  //_("Fix:")
         fix->labelsize(12);
         fix->textsize(12);
       } // Fl_Input* fix
-      { offset_distance = new Fl_Input(530, 125, 80, 25, _("offset distance:"));
+      {  pGB = "偏距";  
+        pUTF8 = G2U(pGB);
+		offset_distance = new Fl_Input(530, 125, 80, 25, pUTF8);  //_("offset distance:")
         offset_distance->labelsize(12);
         offset_distance->textsize(12);
       } // Fl_Input* offset_distance
-      { offset_azimuth = new Fl_Input(530, 155, 80, 25, _("offset azimuth:"));
+      { pGB = "偏移方位";  
+        pUTF8 = G2U(pGB);
+		offset_azimuth = new Fl_Input(530, 155, 80, 25, pUTF8 );  //_("offset azimuth:")
         offset_azimuth->labelsize(12);
         offset_azimuth->textsize(12);
       } // Fl_Input* offset_azimuth
-      { glideslope = new Fl_Input(530, 185, 80, 25, _("Glide slope:"));
+      { pGB = "滑翔道";  
+        pUTF8 = G2U(pGB);
+		glideslope = new Fl_Input(530, 185, 80, 25, pUTF8);  // _("Glide slope:")
         glideslope->labelsize(12);
         glideslope->textsize(12);
       } // Fl_Input* glideslope
-      { roc = new Fl_Input(530, 215, 80, 25, _("Climb rate:"));
+      { pGB = "上升速度";  
+        pUTF8 = G2U(pGB);
+		roc = new Fl_Input(530, 215, 80, 25,pUTF8 );  // _("Climb rate:")
         roc->labelsize(12);
         roc->textsize(12);
         roc->deactivate();
@@ -1097,74 +1223,102 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Box* o
       page[4]->end();
     } // Fl_Group* page[4]
-    { page[5] = new Fl_Group(150, 0, 490, 440, _("Rendering"));
+    { pGB = "呈现";  
+      pUTF8 = G2U(pGB); 
+      page[5] = new Fl_Group(150, 0, 490, 440, pUTF8);   //_("Rendering")
       page[5]->labelfont(1);
       page[5]->labelsize(16);
       page[5]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[5]->hide();
-      { clouds = new Fl_Check_Button(180, 40, 120, 25, _("Clouds"));
+      { pGB = "云";   
+        pUTF8 = G2U(pGB); 
+		clouds = new Fl_Check_Button(180, 40, 120, 25, pUTF8);  //  _("Clouds")
         clouds->tooltip(_("Enable 2D (flat) cloud layers"));
         clouds->down_box(FL_DOWN_BOX);
         clouds->value(1);
         clouds->labelsize(12);
       } // Fl_Check_Button* clouds
-      { clouds3d = new Fl_Check_Button(180, 70, 120, 25, _("3D Clouds"));
+      { pGB = "3D 云";   
+        pUTF8 = G2U(pGB);
+		clouds3d = new Fl_Check_Button(180, 70, 120, 25,pUTF8 ); //_("3D Clouds")
         clouds3d->tooltip(_("Enable 3D (volumetric) cloud layers"));
         clouds3d->down_box(FL_DOWN_BOX);
         clouds3d->labelsize(12);
       } // Fl_Check_Button* clouds3d
-      { fullscreen = new Fl_Check_Button(180, 100, 120, 25, _("Full Screen"));
+      { pGB = "全屏";   
+        pUTF8 = G2U(pGB);
+		fullscreen = new Fl_Check_Button(180, 100, 120, 25, pUTF8);  //  _("Full Screen")
         fullscreen->tooltip(_("Enable full screen mode"));
         fullscreen->down_box(FL_DOWN_BOX);
         fullscreen->labelsize(12);
       } // Fl_Check_Button* fullscreen
-      { texture_compression = new Fl_Check_Button(180, 130, 120, 25, _("Texture compression"));
+      { pGB = "纹理压缩";   
+        pUTF8 = G2U(pGB); 
+		texture_compression = new Fl_Check_Button(180, 130, 120, 25,pUTF8);  //  _("Texture compression")
         texture_compression->tooltip(_("Disabling texture compression can solve the bug where terrain is black"));
         texture_compression->down_box(FL_DOWN_BOX);
         texture_compression->value(1);
         texture_compression->labelsize(12);
       } // Fl_Check_Button* texture_compression
-      { wireframe = new Fl_Check_Button(180, 160, 120, 25, _("Wireframe"));
+      { pGB = "线框";   
+        pUTF8 = G2U(pGB); 
+		wireframe = new Fl_Check_Button(180, 160, 120, 25,pUTF8 );  // _("Wireframe")
         wireframe->tooltip(_("Enable wireframe drawing mode"));
         wireframe->down_box(FL_DOWN_BOX);
         wireframe->labelsize(12);
       } // Fl_Check_Button* wireframe
-      { rembrandt = new Fl_Check_Button(180, 190, 120, 25, _("Rembrandt"));
+      { pGB = "Rembrandt";   
+        pUTF8 = G2U(pGB); 
+		rembrandt = new Fl_Check_Button(180, 190, 120, 25, pUTF8);  // _("Rembrandt")
         rembrandt->tooltip(_("Enable project Rembrandt (deferred rendering)"));
         rembrandt->down_box(FL_DOWN_BOX);
         rembrandt->labelsize(12);
         rembrandt->callback((Fl_Callback*)cb_rembrandt);
       } // Fl_Check_Button* rembrandt
-      { Fl_Group* o = new Fl_Group(315, 45, 120, 100, _("Shading"));
+      { pGB = "阴影";   
+        pUTF8 = G2U(pGB); 
+		Fl_Group* o = new Fl_Group(315, 45, 120, 100, pUTF8);  //_("Shading")
         o->labelfont(1);
         o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-        { shading_smooth = new Fl_Round_Button(330, 70, 105, 25, _("Smooth"));
+        { pGB = "平滑";   
+          pUTF8 = G2U(pGB); 
+		  shading_smooth = new Fl_Round_Button(330, 70, 105, 25, pUTF8);  //_("Smooth")
           shading_smooth->type(102);
           shading_smooth->down_box(FL_ROUND_DOWN_BOX);
           shading_smooth->value(1);
           shading_smooth->labelsize(12);
         } // Fl_Round_Button* shading_smooth
-        { shading_flat = new Fl_Round_Button(330, 95, 105, 25, _("Flat"));
+        { pGB = "平地";   
+          pUTF8 = G2U(pGB);   
+	      shading_flat = new Fl_Round_Button(330, 95, 105, 25, pUTF8);  //_("Flat")
           shading_flat->type(102);
           shading_flat->down_box(FL_ROUND_DOWN_BOX);
           shading_flat->labelsize(12);
         } // Fl_Round_Button* shading_flat
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(450, 45, 120, 100, _("Fog"));
+      { pGB = "大雾";   
+        pUTF8 = G2U(pGB); 
+		Fl_Group* o = new Fl_Group(450, 45, 120, 100,pUTF8);  // _("Fog")
         o->labelfont(1);
         o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-        { fog_disabled = new Fl_Round_Button(460, 70, 110, 25, _("Disabled"));
+        { pGB = "禁用";   
+          pUTF8 = G2U(pGB); 
+		  fog_disabled = new Fl_Round_Button(460, 70, 110, 25,pUTF8 );  // _("Disabled")
           fog_disabled->type(102);
           fog_disabled->down_box(FL_ROUND_DOWN_BOX);
           fog_disabled->labelsize(12);
         } // Fl_Round_Button* fog_disabled
-        { fog_fastest = new Fl_Round_Button(460, 95, 110, 25, _("Fastest"));
+        { pGB = "最快";   
+          pUTF8 = G2U(pGB); 
+		  fog_fastest = new Fl_Round_Button(460, 95, 110, 25,pUTF8);  // _("Fastest")
           fog_fastest->type(102);
           fog_fastest->down_box(FL_ROUND_DOWN_BOX);
           fog_fastest->labelsize(12);
         } // Fl_Round_Button* fog_fastest
-        { fog_nicest = new Fl_Round_Button(460, 120, 110, 25, _("Nicest"));
+        { pGB = "最好";   
+          pUTF8 = G2U(pGB); 
+		  fog_nicest = new Fl_Round_Button(460, 120, 110, 25, pUTF8);  //_("Nicest")
           fog_nicest->type(102);
           fog_nicest->down_box(FL_ROUND_DOWN_BOX);
           fog_nicest->value(1);
@@ -1172,26 +1326,34 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         } // Fl_Round_Button* fog_nicest
         o->end();
       } // Fl_Group* o
-      { geometry = new Fl_Input(235, 265, 120, 25, _("Geometry:"));
+      { pGB = "几何结构";   
+        pUTF8 = G2U(pGB); 
+		geometry = new Fl_Input(235, 265, 120, 25, pUTF8);  // _("Geometry:")
         geometry->tooltip(_("Window geometry, WxH"));
         geometry->labelsize(12);
         geometry->textsize(12);
       } // Fl_Input* geometry
-      { visibility = new Fl_Float_Input(235, 295, 120, 25, _("Visibility:"));
+      { pGB = "能见度";   
+        pUTF8 = G2U(pGB); 
+		visibility = new Fl_Float_Input(235, 295, 120, 25,pUTF8);  // _("Visibility:")
         visibility->tooltip(_("Initial visibility distance"));
         visibility->type(1);
         visibility->labelsize(12);
         visibility->textsize(12);
       } // Fl_Float_Input* visibility
       { Fl_Group* o = new Fl_Group(225, 320, 120, 50);
-        { vis_meters = new Fl_Round_Button(235, 320, 60, 25, _("Meters"));
+        { pGB = "米";   
+          pUTF8 = G2U(pGB);
+		  vis_meters = new Fl_Round_Button(235, 320, 60, 25, pUTF8 ); // _("Meters")
           vis_meters->tooltip(_("Specify visibilty in meters"));
           vis_meters->type(102);
           vis_meters->down_box(FL_ROUND_DOWN_BOX);
           vis_meters->value(1);
           vis_meters->labelsize(12);
         } // Fl_Round_Button* vis_meters
-        { vis_miles = new Fl_Round_Button(235, 345, 60, 25, _("Miles"));
+        { pGB = "英里";   
+          pUTF8 = G2U(pGB);
+		  vis_miles = new Fl_Round_Button(235, 345, 60, 25,pUTF8);  //_("Miles")
           vis_miles->tooltip(_("Specify visiblity in miles"));
           vis_miles->type(102);
           vis_miles->down_box(FL_ROUND_DOWN_BOX);
@@ -1199,11 +1361,15 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         } // Fl_Round_Button* vis_miles
         o->end();
       } // Fl_Group* o
-      { view_offset = new Fl_Input(490, 265, 120, 25, _("View Offset:"));
+      { pGB = "视图抵消";   
+        pUTF8 = G2U(pGB);
+		view_offset = new Fl_Input(490, 265, 120, 25, pUTF8);  //_("View Offset:")
         view_offset->labelsize(12);
         view_offset->textsize(12);
       } // Fl_Input* view_offset
-      { bpp = new Fl_Choice(490, 295, 120, 25, _("bpp:"));
+      { pGB = "bpp";   
+        pUTF8 = G2U(pGB);
+		bpp = new Fl_Choice(490, 295, 120, 25, pUTF8);  //_("bpp:")
         bpp->tooltip(_("Color depth (bits per pixel)"));
         bpp->down_box(FL_BORDER_BOX);
         bpp->labelsize(12);
@@ -1217,7 +1383,9 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         }
         bpp->menu(menu_bpp);
       } // Fl_Choice* bpp
-      { fov = new Fl_Value_Input(490, 325, 120, 25, _("FOV:"));
+      { pGB = "视场";   
+        pUTF8 = G2U(pGB);
+		fov = new Fl_Value_Input(490, 325, 120, 25, pUTF8);  //_("FOV:")
         fov->tooltip(_("Field of View angle"));
         fov->labelsize(12);
         fov->minimum(1);
@@ -1225,7 +1393,9 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
         fov->value(60);
         fov->textsize(12);
       } // Fl_Value_Input* fov
-      { texture_filtering = new Fl_Choice(490, 355, 120, 25, _("Texture filtering:"));
+      { pGB = "纹理过滤";   
+        pUTF8 = G2U(pGB);
+		texture_filtering = new Fl_Choice(490, 355, 120, 25, pUTF8);  // _("Texture filtering:")
         texture_filtering->tooltip(_("Set the maximum degree of anisotropy in texture filtering"));
         texture_filtering->down_box(FL_BORDER_BOX);
         texture_filtering->labelsize(12);
@@ -1233,11 +1403,15 @@ Advanced::Advanced(Fl_Preferences& p):prefs(p) {
       } // Fl_Choice* texture_filtering
       { new Fl_Box(615, 415, 25, 25);
       } // Fl_Box* o
-      { materials_file = new Fl_Input(490, 385, 120, 25, _("Materials file:"));
+      { pGB = "材料文件";   
+        pUTF8 = G2U(pGB); 
+		materials_file = new Fl_Input(490, 385, 120, 25, pUTF8);  // _("Materials file:")
         materials_file->labelsize(12);
         materials_file->textsize(12);
       } // Fl_Input* materials_file
-      { anti_aliasing = new Fl_Choice(490, 415, 120, 25, _("Anti-aliasing:"));
+      { pGB = "反走样";   
+        pUTF8 = G2U(pGB); 
+		anti_aliasing = new Fl_Choice(490, 415, 120, 25, pUTF8);  //_("Anti-aliasing:")
         anti_aliasing->tooltip(_("Set the maximum degree of anti-aliasing. With Rembrandt enabled, the FXAA opt\
 ion of the graphics drivers should be used instead."));
         anti_aliasing->down_box(FL_BORDER_BOX);
@@ -1249,12 +1423,16 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Box* o
       page[5]->end();
     } // Fl_Group* page[5]
-    { page[6] = new Fl_Group(150, 0, 490, 440, _("Time"));
+    { pGB = "时间";   
+      pUTF8 = G2U(pGB);
+	  page[6] = new Fl_Group(150, 0, 490, 440,pUTF8);  //_("Time")
       page[6]->labelfont(1);
       page[6]->labelsize(16);
       page[6]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[6]->hide();
-      { time_match_real = new Fl_Round_Button(175, 35, 220, 25, _("Time match real"));
+      { pGB = "实际时间";   
+        pUTF8 = G2U(pGB);
+		time_match_real = new Fl_Round_Button(175, 35, 220, 25,pUTF8 );  //_("Time match real")
         time_match_real->tooltip(_("Synchronize simulation time with real time"));
         time_match_real->type(102);
         time_match_real->down_box(FL_ROUND_DOWN_BOX);
@@ -1262,32 +1440,42 @@ ion of the graphics drivers should be used instead."));
         time_match_real->labelsize(12);
         time_match_real->callback((Fl_Callback*)cb_time_match_real);
       } // Fl_Round_Button* time_match_real
-      { time_match_local = new Fl_Round_Button(175, 65, 220, 25, _("Time match local"));
+      { pGB = "当地时间";   
+        pUTF8 = G2U(pGB);
+		time_match_local = new Fl_Round_Button(175, 65, 220, 25,pUTF8 );  //_("Time match local")
         time_match_local->tooltip(_("Synchronize simulation time with local time"));
         time_match_local->type(102);
         time_match_local->down_box(FL_ROUND_DOWN_BOX);
         time_match_local->labelsize(12);
         time_match_local->callback((Fl_Callback*)cb_time_match_local);
       } // Fl_Round_Button* time_match_local
-      { start_date_sys = new Fl_Round_Button(175, 95, 220, 25, _("Start date sys"));
+      { pGB = "系统开始日期";   
+        pUTF8 = G2U(pGB);
+		start_date_sys = new Fl_Round_Button(175, 95, 220, 25,pUTF8);   //_("Start date sys")
         start_date_sys->type(102);
         start_date_sys->down_box(FL_ROUND_DOWN_BOX);
         start_date_sys->labelsize(12);
         start_date_sys->callback((Fl_Callback*)cb_start_date_sys);
       } // Fl_Round_Button* start_date_sys
-      { start_date_gmt = new Fl_Round_Button(175, 125, 220, 25, _("Start date gmt"));
+      { pGB = "gmt开始日期";   
+        pUTF8 = G2U(pGB);
+		start_date_gmt = new Fl_Round_Button(175, 125, 220, 25,pUTF8 );  //_("Start date gmt")
         start_date_gmt->type(102);
         start_date_gmt->down_box(FL_ROUND_DOWN_BOX);
         start_date_gmt->labelsize(12);
         start_date_gmt->callback((Fl_Callback*)cb_start_date_gmt);
       } // Fl_Round_Button* start_date_gmt
-      { start_date_lat = new Fl_Round_Button(175, 155, 220, 25, _("Start date lat"));
+      { pGB = "纬度开始日期";   
+        pUTF8 = G2U(pGB);
+		start_date_lat = new Fl_Round_Button(175, 155, 220, 25, pUTF8);  //_("Start date lat")
         start_date_lat->type(102);
         start_date_lat->down_box(FL_ROUND_DOWN_BOX);
         start_date_lat->labelsize(12);
         start_date_lat->callback((Fl_Callback*)cb_start_date_lat);
       } // Fl_Round_Button* start_date_lat
-      { time_offset_value = new Fl_Input(400, 35, 140, 25);
+      { //pGB = "Offset (+/-) from real time";   
+        //pUTF8 = G2U(pGB);
+		time_offset_value = new Fl_Input(400, 35, 140, 25);
         time_offset_value->tooltip(_("Offset (+/-) from real time"));
         time_offset_value->labeltype(FL_NO_LABEL);
         time_offset_value->labelsize(12);
@@ -1315,13 +1503,17 @@ ion of the graphics drivers should be used instead."));
         start_date_lat_value->callback((Fl_Callback*)cb_start_date_lat_value);
         start_date_lat_value->when(3);
       } // Fl_Input* start_date_lat_value
-      { time_of_day = new Fl_Round_Button(175, 185, 220, 25, _("Time of day"));
+      { pGB = "当日时间";   
+        pUTF8 = G2U(pGB);
+		time_of_day = new Fl_Round_Button(175, 185, 220, 25,pUTF8);  // _("Time of day")
         time_of_day->type(102);
         time_of_day->down_box(FL_ROUND_DOWN_BOX);
         time_of_day->labelsize(12);
         time_of_day->callback((Fl_Callback*)cb_time_of_day);
       } // Fl_Round_Button* time_of_day
-      { time_of_day_value = new Fl_Choice(400, 185, 140, 25, _("choice:"));
+      { pGB = "选择";   
+        pUTF8 = G2U(pGB);
+		time_of_day_value = new Fl_Choice(400, 185, 140, 25, pUTF8);  //_("choice:")
         time_of_day_value->down_box(FL_BORDER_BOX);
         time_of_day_value->labeltype(FL_NO_LABEL);
         time_of_day_value->labelsize(12);
@@ -1332,12 +1524,16 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Box* o
       page[6]->end();
     } // Fl_Group* page[6]
-    { page[7] = new Fl_Group(150, 0, 490, 440, _("Network"));
+    { pGB = "网络";   
+      pUTF8 = G2U(pGB);
+	  page[7] = new Fl_Group(150, 0, 490, 440,pUTF8);  //_("Network")
       page[7]->labelfont(1);
       page[7]->labelsize(16);
       page[7]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[7]->hide();
-      { httpd = new Fl_Check_Button(175, 35, 130, 25, _("httpd"));
+      { pGB = "超文字传输协定";   
+        pUTF8 = G2U(pGB);
+		httpd = new Fl_Check_Button(175, 35, 130, 25, pUTF8);  //_("httpd")
         httpd->tooltip(_("Enable HTTP server"));
         httpd->down_box(FL_DOWN_BOX);
         httpd->labelsize(12);
@@ -1354,7 +1550,9 @@ ion of the graphics drivers should be used instead."));
         httpd_port->when(3);
         httpd_port->deactivate();
       } // Fl_Value_Input* httpd_port
-      { props = new Fl_Check_Button(175, 65, 130, 25, _("props"));
+      { pGB = "道具";   
+        pUTF8 = G2U(pGB);
+		props = new Fl_Check_Button(175, 65, 130, 25,pUTF8);  //_("props")
         props->tooltip(_("Enable property server"));
         props->down_box(FL_DOWN_BOX);
         props->labelsize(12);
@@ -1370,7 +1568,9 @@ ion of the graphics drivers should be used instead."));
         props_port->textsize(12);
         props_port->deactivate();
       } // Fl_Value_Input* props_port
-      { jpg_httpd = new Fl_Check_Button(175, 95, 130, 25, _("jpg-httpd"));
+      { pGB = "jpg-httpd";   
+        pUTF8 = G2U(pGB);
+		jpg_httpd = new Fl_Check_Button(175, 95, 130, 25, pUTF8);  //_("jpg-httpd")
         jpg_httpd->tooltip(_("Enable screen shot HTTP server"));
         jpg_httpd->down_box(FL_DOWN_BOX);
         jpg_httpd->labelsize(12);
@@ -1386,22 +1586,29 @@ ion of the graphics drivers should be used instead."));
         jpg_httpd_port->textsize(12);
         jpg_httpd_port->deactivate();
       } // Fl_Value_Input* jpg_httpd_port
-      { Fl_Group* o = new Fl_Group(155, 135, 480, 120, _("Multiplayer Options"));
+      { pGB = "多人选项";   
+        pUTF8 = G2U(pGB);
+		Fl_Group* o = new Fl_Group(155, 135, 480, 120,pUTF8);  //_("Multiplayer Options")
         o->box(FL_ENGRAVED_FRAME);
         o->labelfont(1);
         o->labelsize(12);
         o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-        { callsign = new Fl_Input(240, 160, 135, 25, _("Callsign:"));
+        { pGB = "呼号";   
+          pUTF8 = G2U(pGB);
+		  callsign = new Fl_Input(240, 160, 135, 25, pUTF8);  // _("Callsign:")
           callsign->labelsize(12);
           callsign->textsize(12);
         } // Fl_Input* callsign
-        { 
-		  multiplay1 = new Fl_Input(240, 190, 295, 25, _("Multiplay 1:"));
+        { pGB = "多合一1";   
+          pUTF8 = G2U(pGB);
+		  multiplay1 = new Fl_Input(240, 190, 295, 25, pUTF8);  //_("Multiplay 1:")
           multiplay1->tooltip(_("in|out,hz,address,port"));
           multiplay1->labelsize(12);
           multiplay1->textsize(12);
         } // Fl_Input* multiplay1
-        { multiplay2 = new Fl_Input(240, 220, 295, 25, _("Multiplay 2:"));
+        { pGB = "多合一2";   
+          pUTF8 = G2U(pGB);
+		  multiplay2 = new Fl_Input(240, 220, 295, 25, pUTF8 ); //_("Multiplay 2:")
           multiplay2->labelsize(12);
           multiplay2->textsize(12);
         } // Fl_Input* multiplay2
@@ -1410,25 +1617,33 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Box* o
         o->end();
       } // Fl_Group* o
-      { proxy = new Fl_Input(240, 400, 230, 25, _("Proxy:"));
+      { pGB = "代理";   
+        pUTF8 = G2U(pGB);
+		proxy = new Fl_Input(240, 400, 230, 25, pUTF8);  //_("Proxy:")
         proxy->labelsize(12);
         proxy->textsize(12);
       } // Fl_Input* proxy
       { Fl_Box* o = new Fl_Box(610, 415, 25, 25);
         Fl_Group::current()->resizable(o);
       } // Fl_Box* o
-      { Fl_Group* o = new Fl_Group(155, 266, 480, 120, _("FGCom Options"));
+      { pGB = "FGCom选项";   
+        pUTF8 = G2U(pGB);
+		Fl_Group* o = new Fl_Group(155, 266, 480, 120, pUTF8);  //_("FGCom Options")
         o->box(FL_ENGRAVED_FRAME);
         o->labelfont(1);
         o->labelsize(12);
         o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-        { fgcom_hostname = new Fl_Input(333, 349, 135, 25, _("Hostname:"));
+        { pGB = "主机名";   
+          pUTF8 = G2U(pGB);
+		  fgcom_hostname = new Fl_Input(333, 349, 135, 25, pUTF8);  //_("Hostname:")
           fgcom_hostname->tooltip(_("FGCom standalone hostname"));
           fgcom_hostname->labelsize(12);
           fgcom_hostname->textsize(12);
           fgcom_hostname->deactivate();
         } // Fl_Input* fgcom_hostname
-        { fgcom_port = new Fl_Value_Input(520, 349, 85, 25, _("Port:"));
+        { pGB = "舱门";   
+          pUTF8 = G2U(pGB);
+		  fgcom_port = new Fl_Value_Input(520, 349, 85, 25, pUTF8);  //_("Port:")
           fgcom_port->tooltip(_("FGCom standalone port"));
           fgcom_port->minimum(1025);
           fgcom_port->maximum(65535);
@@ -1438,20 +1653,26 @@ ion of the graphics drivers should be used instead."));
         { Fl_Box* o = new Fl_Box(590, 372, 40, 10);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
-        { fgcom_disabled = new Fl_Round_Button(241, 286, 228, 15, _("Disabled"));
+        { pGB = "禁用";   
+          pUTF8 = G2U(pGB);
+		  fgcom_disabled = new Fl_Round_Button(241, 286, 228, 15,pUTF8);  // _("Disabled")
           fgcom_disabled->tooltip(_("Disable FGCom"));
           fgcom_disabled->type(102);
           fgcom_disabled->down_box(FL_ROUND_DOWN_BOX);
           fgcom_disabled->value(1);
           fgcom_disabled->callback((Fl_Callback*)cb_fgcom_disabled);
         } // Fl_Round_Button* fgcom_disabled
-        { fgcom_builtin = new Fl_Round_Button(241, 305, 224, 15, _("FGCom built-in"));
+        { pGB = "FGCom内置";   
+          pUTF8 = G2U(pGB);
+		  fgcom_builtin = new Fl_Round_Button(241, 305, 224, 15, pUTF8);  //_("FGCom built-in")
           fgcom_builtin->tooltip(_("Enable FGCom built-in"));
           fgcom_builtin->type(102);
           fgcom_builtin->down_box(FL_ROUND_DOWN_BOX);
           fgcom_builtin->callback((Fl_Callback*)cb_fgcom_builtin);
         } // Fl_Round_Button* fgcom_builtin
-        { fgcom_standalone = new Fl_Round_Button(241, 325, 224, 15, _("FGCom standalone"));
+        { pGB = "FGCom独立";   
+          pUTF8 = G2U(pGB);
+		  fgcom_standalone = new Fl_Round_Button(241, 325, 224, 15, pUTF8);  //_("FGCom standalone")
           fgcom_standalone->tooltip(_("Enable FGCom standalone"));
           fgcom_standalone->type(102);
           fgcom_standalone->down_box(FL_ROUND_DOWN_BOX);
@@ -1461,7 +1682,9 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Group* o
       page[7]->end();
     } // Fl_Group* page[7]
-    { page[8] = new Fl_Group(150, 0, 490, 435, _("Input/Output"));
+    { pGB = "输入/输出";     //借用这里的
+      pUTF8 = G2U(pGB);
+	  page[8] = new Fl_Group(150, 0, 490, 435,pUTF8);  //_("Input/Output")
       page[8]->labelfont(1);
       page[8]->labelsize(16);
       page[8]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -1475,16 +1698,22 @@ ion of the graphics drivers should be used instead."));
         Fl_Group::current()->resizable(io_list);
       } // Fl_Browser* io_list
       { Fl_Group* o = new Fl_Group(150, 170, 485, 265);
-        { io_new = new Fl_Button(500, 185, 75, 25, _("New"));
+        { pGB = "新建";   
+          pUTF8 = G2U(pGB);
+		  io_new = new Fl_Button(500, 185, 75, 25, pUTF8);  //_("New")
           io_new->labelsize(12);
           io_new->callback((Fl_Callback*)cb_io_new);
         } // Fl_Button* io_new
-        { io_delete = new Fl_Button(580, 185, 55, 25, _("Delete"));
+        { pGB = "删除";   
+          pUTF8 = G2U(pGB);
+		  io_delete = new Fl_Button(580, 185, 55, 25, pUTF8);  //_("Delete")
           io_delete->labelsize(12);
           io_delete->callback((Fl_Callback*)cb_io_delete);
           io_delete->deactivate();
         } // Fl_Button* io_delete
-        { io_protocol = new Fl_Choice(260, 185, 125, 25, _("Protocol:"));
+        { pGB = "议定书";   
+          pUTF8 = G2U(pGB);
+		  io_protocol = new Fl_Choice(260, 185, 125, 25, pUTF8); //_("Protocol:")
           io_protocol->down_box(FL_BORDER_BOX);
           io_protocol->labelsize(12);
           io_protocol->textsize(12);
@@ -1498,7 +1727,9 @@ ion of the graphics drivers should be used instead."));
           }
           io_protocol->menu(menu_io_protocol);
         } // Fl_Choice* io_protocol
-        { io_medium = new Fl_Choice(260, 215, 125, 25, _("Medium:"));
+        { pGB = "媒体";   
+          pUTF8 = G2U(pGB);
+		  io_medium = new Fl_Choice(260, 215, 125, 25, pUTF8);  //_("Medium:")
           io_medium->down_box(FL_BORDER_BOX);
           io_medium->labelsize(12);
           io_medium->textsize(12);
@@ -1514,7 +1745,9 @@ ion of the graphics drivers should be used instead."));
           }
           io_medium->menu(menu_io_medium);
         } // Fl_Choice* io_medium
-        { io_dir = new Fl_Choice(260, 245, 125, 25, _("Direction:"));
+        { pGB = "方向";   
+          pUTF8 = G2U(pGB);
+		  io_dir = new Fl_Choice(260, 245, 125, 25,pUTF8);  //_("Direction:")
           io_dir->down_box(FL_BORDER_BOX);
           io_dir->labelsize(12);
           io_dir->textsize(12);
@@ -1529,8 +1762,10 @@ ion of the graphics drivers should be used instead."));
           }
           io_dir->menu(menu_io_dir);
         } // Fl_Choice* io_dir
-        { io_hz = new Fl_Value_Input(260, 275, 125, 25, _("Hz:"));
-          io_hz->labelsize(12);
+        { pGB = "赫兹";   
+          pUTF8 = G2U(pGB);
+		  io_hz = new Fl_Value_Input(260, 275, 125, 25, pUTF8);  //_("Hz:")
+          io_hz->labelsize(12); 
           io_hz->minimum(1);
           io_hz->maximum(1000);
           io_hz->value(5);
@@ -1540,7 +1775,9 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Value_Input* io_hz
         { file_group = new Fl_Group(165, 305, 250, 25);
           file_group->hide();
-          { io_file_name = new Fl_Input(260, 305, 125, 25, _("File:"));
+          { pGB = "文件";   
+            pUTF8 = G2U(pGB);
+		 	io_file_name = new Fl_Input(260, 305, 125, 25, pUTF8);  // _("File:")
             io_file_name->labelsize(12);
             io_file_name->textsize(12);
             io_file_name->callback((Fl_Callback*)cb_io_file_name);
@@ -1554,13 +1791,17 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Group* file_group
         { serial_group = new Fl_Group(165, 305, 250, 55);
           serial_group->hide();
-          { serial_port = new Fl_Input(260, 305, 125, 25, _("Port:"));
+          { pGB = "舱门";   
+            pUTF8 = G2U(pGB);
+			serial_port = new Fl_Input(260, 305, 125, 25,pUTF8 );  //_("Port:")
             serial_port->labelsize(12);
             serial_port->textsize(12);
             serial_port->callback((Fl_Callback*)cb_serial_port);
             serial_port->when(FL_WHEN_CHANGED);
           } // Fl_Input* serial_port
-          { serial_baud_rate = new Fl_Int_Input(260, 335, 125, 25, _("Baud Rate:"));
+          { pGB = "波特率";   
+            pUTF8 = G2U(pGB);
+			serial_baud_rate = new Fl_Int_Input(260, 335, 125, 25, pUTF8);  //_("Baud Rate:")
             serial_baud_rate->type(2);
             serial_baud_rate->labelsize(12);
             serial_baud_rate->textsize(12);
@@ -1571,13 +1812,17 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Group* serial_group
         { socket_group = new Fl_Group(165, 305, 250, 85);
           socket_group->hide();
-          { socket_host = new Fl_Input(260, 305, 125, 25, _("Hostname:"));
+          { pGB = "主机名";   
+            pUTF8 = G2U(pGB);
+			socket_host = new Fl_Input(260, 305, 125, 25, pUTF8);  //_("Hostname:")
             socket_host->labelsize(12);
             socket_host->textsize(12);
             socket_host->callback((Fl_Callback*)cb_socket_host);
             socket_host->when(FL_WHEN_CHANGED);
           } // Fl_Input* socket_host
-          { socket_port = new Fl_Value_Input(260, 335, 125, 25, _("Port:"));
+          { pGB = "舱门";   
+            pUTF8 = G2U(pGB);
+			socket_port = new Fl_Value_Input(260, 335, 125, 25,pUTF8);  //_("Port:")
             socket_port->labelsize(12);
             socket_port->minimum(1024);
             socket_port->maximum(65535);
@@ -1586,14 +1831,18 @@ ion of the graphics drivers should be used instead."));
             socket_port->textsize(12);
             socket_port->callback((Fl_Callback*)cb_socket_port);
           } // Fl_Value_Input* socket_port
-          { socket_tcp = new Fl_Round_Button(260, 365, 55, 25, _("TCP"));
+          { pGB = "TCP";   
+            pUTF8 = G2U(pGB);
+			socket_tcp = new Fl_Round_Button(260, 365, 55, 25,pUTF8);  //_("TCP")
             socket_tcp->type(102);
             socket_tcp->down_box(FL_ROUND_DOWN_BOX);
             socket_tcp->value(1);
             socket_tcp->labelsize(12);
             socket_tcp->callback((Fl_Callback*)cb_socket_tcp);
           } // Fl_Round_Button* socket_tcp
-          { socket_udp = new Fl_Round_Button(330, 365, 85, 25, _("UDP"));
+          { pGB = "UDP";   
+            pUTF8 = G2U(pGB);
+			socket_udp = new Fl_Round_Button(330, 365, 85, 25, pUTF8);  //_("UDP")
             socket_udp->type(102);
             socket_udp->down_box(FL_ROUND_DOWN_BOX);
             socket_udp->labelsize(12);
@@ -1603,7 +1852,9 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Group* socket_group
         { generic_group = new Fl_Group(165, 360, 250, 30);
           generic_group->hide();
-          { io_generic_file = new Fl_Choice(260, 365, 125, 25, _("Generic:"));
+          { pGB = "通用的";   
+            pUTF8 = G2U(pGB);
+			io_generic_file = new Fl_Choice(260, 365, 125, 25, pUTF8);  //_("Generic:")
             io_generic_file->down_box(FL_BORDER_BOX);
             io_generic_file->labelsize(12);
             io_generic_file->textsize(12);
@@ -1613,7 +1864,9 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Group* generic_group
         { repeat_group = new Fl_Group(165, 390, 250, 30);
           repeat_group->hide();
-          { repeat = new Fl_Check_Button(260, 395, 70, 25, _("Repeat"));
+          { pGB = "重复";   
+            pUTF8 = G2U(pGB);
+			repeat = new Fl_Check_Button(260, 395, 70, 25, pUTF8);  //_("Repeat")
             repeat->down_box(FL_DOWN_BOX);
             repeat->labelsize(12);
             repeat->callback((Fl_Callback*)cb_repeat);
@@ -1633,21 +1886,29 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Group* o
       page[8]->end();
     } // Fl_Group* page[8]
-    { page[9] = new Fl_Group(150, 0, 490, 435, _("Avionics"));
+    { pGB = "航空电子设备";   
+      pUTF8 = G2U(pGB);
+	  page[9] = new Fl_Group(150, 0, 490, 435, pUTF8);  //_("Avionics")
       page[9]->labelfont(1);
       page[9]->labelsize(16);
       page[9]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[9]->hide();
-      { nav1 = new Fl_Input(205, 40, 150, 25, _("Nav1:"));
+      { pGB = "导航1";   
+        pUTF8 = G2U(pGB);
+		nav1 = new Fl_Input(205, 40, 150, 25, pUTF8); //_("Nav1:")
         nav1->tooltip(_("Set the NAV1 radio frequency, optionally preceded by a radial"));
         nav1->labelsize(12);
         nav1->textsize(12);
       } // Fl_Input* nav1
-      { nav2 = new Fl_Input(205, 70, 150, 25, _("Nav2:"));
+      { pGB = "导航2";   
+        pUTF8 = G2U(pGB);
+		nav2 = new Fl_Input(205, 70, 150, 25, pUTF8);  //_("Nav2:")
         nav2->labelsize(12);
         nav2->textsize(12);
       } // Fl_Input* nav2
-      { adf = new Fl_Input(205, 100, 150, 25, _("ADF:"));
+      { pGB = "空军防空部队";   
+        pUTF8 = G2U(pGB);
+		adf = new Fl_Input(205, 100, 150, 25, pUTF8);  //_("ADF:")
         adf->labelsize(12);
         adf->textsize(12);
       } // Fl_Input* adf
@@ -1655,19 +1916,25 @@ ion of the graphics drivers should be used instead."));
         dme_group->labelsize(12);
         dme_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         dme_group->deactivate();
-        { dme_nav1 = new Fl_Round_Button(215, 170, 85, 25, _("Nav1"));
+        { pGB = "导航1";   
+          pUTF8 = G2U(pGB);
+		  dme_nav1 = new Fl_Round_Button(215, 170, 85, 25, pUTF8); //_("Nav1")
           dme_nav1->type(102);
           dme_nav1->down_box(FL_ROUND_DOWN_BOX);
           dme_nav1->labelsize(12);
           dme_nav1->callback((Fl_Callback*)cb_dme_nav1);
         } // Fl_Round_Button* dme_nav1
-        { dme_nav2 = new Fl_Round_Button(215, 195, 85, 25, _("Nav2"));
+        { pGB = "导航2";   
+          pUTF8 = G2U(pGB);
+		  dme_nav2 = new Fl_Round_Button(215, 195, 85, 25,pUTF8 );  //_("Nav2")
           dme_nav2->type(102);
           dme_nav2->down_box(FL_ROUND_DOWN_BOX);
           dme_nav2->labelsize(12);
           dme_nav2->callback((Fl_Callback*)cb_dme_nav2);
         } // Fl_Round_Button* dme_nav2
-        { dme_int = new Fl_Round_Button(215, 220, 70, 25, _("Internal"));
+        { pGB = "内部";   
+          pUTF8 = G2U(pGB);
+		  dme_int = new Fl_Round_Button(215, 220, 70, 25,pUTF8 );  //_("Internal")
           dme_int->type(102);
           dme_int->down_box(FL_ROUND_DOWN_BOX);
           dme_int->labelsize(12);
@@ -1680,7 +1947,9 @@ ion of the graphics drivers should be used instead."));
         } // Fl_Input* dme_int_freq
         dme_group->end();
       } // Fl_Group* dme_group
-      { dme = new Fl_Check_Button(205, 140, 20, 25, _("DME:"));
+      { pGB = "测距装置";   
+        pUTF8 = G2U(pGB);
+		dme = new Fl_Check_Button(205, 140, 20, 25, pUTF8);   //_("DME:") 
         dme->down_box(FL_DOWN_BOX);
         dme->labelsize(12);
         dme->callback((Fl_Callback*)cb_dme);
@@ -1691,7 +1960,9 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Box* o
       page[9]->end();
     } // Fl_Group* page[9]
-    { page[10] = new Fl_Group(150, 0, 550, 430, _("Properties"));
+    { pGB = "属性";   
+      pUTF8 = G2U(pGB);
+	  page[10] = new Fl_Group(150, 0, 550, 430,pUTF8 );  //_("Properties")
       page[10]->labelfont(1);
       page[10]->labelsize(16);
       page[10]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -1707,12 +1978,16 @@ ion of the graphics drivers should be used instead."));
         prop_list->callback((Fl_Callback*)cb_prop_list);
       } // Fl_Browser* prop_list
       { Fl_Group* o = new Fl_Group(220, 185, 415, 25);
-        { prop_delete = new Fl_Button(580, 185, 55, 25, _("Delete"));
+        { pGB = "删除";   
+          pUTF8 = G2U(pGB);
+		  prop_delete = new Fl_Button(580, 185, 55, 25, pUTF8);  //_("Delete")
           prop_delete->labelsize(12);
           prop_delete->callback((Fl_Callback*)cb_prop_delete);
           prop_delete->deactivate();
         } // Fl_Button* prop_delete
-        { prop_input = new Fl_Input(220, 185, 275, 25, _("Property:"));
+        { pGB = "属性";   
+          pUTF8 = G2U(pGB);
+		  prop_input = new Fl_Input(220, 185, 275, 25, pUTF8);  //_("Property:")
           prop_input->tooltip(_("prop=value"));
           prop_input->labelsize(12);
           prop_input->textsize(12);
@@ -1721,7 +1996,9 @@ ion of the graphics drivers should be used instead."));
           prop_input->deactivate();
           Fl_Group::current()->resizable(prop_input);
         } // Fl_Input* prop_input
-        { Fl_Button* o = new Fl_Button(500, 185, 75, 25, _("New"));
+        { pGB = "新建";   
+          pUTF8 = G2U(pGB);
+		  Fl_Button* o = new Fl_Button(500, 185, 75, 25, pUTF8);  // _("New")
           o->labelsize(12);
           o->callback((Fl_Callback*)cb_New);
         } // Fl_Button* o
@@ -1729,13 +2006,17 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Group* o
       page[10]->end();
     } // Fl_Group* page[10]
-    { page[11] = new Fl_Group(150, 0, 490, 430, _("Debugging"));
+    { pGB = "调试";   
+      pUTF8 = G2U(pGB);
+	  page[11] = new Fl_Group(150, 0, 490, 430, pUTF8);  //_("Debugging")
       page[11]->labelfont(1);
       page[11]->labelsize(16);
       page[11]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[11]->hide();
       { Fl_Group* o = new Fl_Group(160, 45, 475, 35);
-        { log_level = new Fl_Choice(260, 45, 130, 25, _("Log Level:"));
+        { pGB = "日志级别";   
+          pUTF8 = G2U(pGB);
+		  log_level = new Fl_Choice(260, 45, 130, 25, pUTF8); //_("Log Level:")
           log_level->down_box(FL_BORDER_BOX);
           log_level->labelsize(12);
           log_level->textsize(12);
@@ -1750,7 +2031,9 @@ ion of the graphics drivers should be used instead."));
           { Fl_Box* o = new Fl_Box(210, 105, 295, 80);
             Fl_Group::current()->resizable(o);
           } // Fl_Box* o
-          { trace_read_list = new Fl_Browser(160, 105, 475, 80, _("Trace Read Properties"));
+          { pGB = "跟踪读取属性";   
+            pUTF8 = G2U(pGB);
+			trace_read_list = new Fl_Browser(160, 105, 475, 80, pUTF8); //_("Trace Read Properties")
             trace_read_list->type(2);
             trace_read_list->labelfont(1);
             trace_read_list->textsize(12);
@@ -1758,7 +2041,9 @@ ion of the graphics drivers should be used instead."));
             trace_read_list->align(Fl_Align(FL_ALIGN_TOP_LEFT));
           } // Fl_Browser* trace_read_list
           { Fl_Group* o = new Fl_Group(200, 195, 435, 25);
-            { trace_read_input = new Fl_Input(200, 195, 305, 25, _("Value:"));
+            { pGB = "价值";   
+              pUTF8 = G2U(pGB);
+			  trace_read_input = new Fl_Input(200, 195, 305, 25, pUTF8); //_("Value:")
               trace_read_input->labelsize(12);
               trace_read_input->textsize(12);
               trace_read_input->callback((Fl_Callback*)cb_trace_read_input);
@@ -1766,11 +2051,15 @@ ion of the graphics drivers should be used instead."));
               trace_read_input->deactivate();
               Fl_Group::current()->resizable(trace_read_input);
             } // Fl_Input* trace_read_input
-            { Fl_Button* o = new Fl_Button(510, 195, 70, 25, _("New"));
+            { pGB = "新建";   
+              pUTF8 = G2U(pGB);
+			  Fl_Button* o = new Fl_Button(510, 195, 70, 25, pUTF8 ); //_("New")
               o->labelsize(12);
               o->callback((Fl_Callback*)cb_New1);
             } // Fl_Button* o
-            { trace_read_delete = new Fl_Button(585, 195, 50, 25, _("Delete"));
+            { pGB = "删除";   
+              pUTF8 = G2U(pGB);
+			  trace_read_delete = new Fl_Button(585, 195, 50, 25, pUTF8); //_("Delete")
               trace_read_delete->labelsize(12);
               trace_read_delete->callback((Fl_Callback*)cb_trace_read_delete);
               trace_read_delete->deactivate();
@@ -1783,7 +2072,9 @@ ion of the graphics drivers should be used instead."));
           { Fl_Box* o = new Fl_Box(200, 265, 305, 80);
             Fl_Group::current()->resizable(o);
           } // Fl_Box* o
-          { trace_write_list = new Fl_Browser(160, 265, 475, 80, _("Trace Write Properties"));
+          { pGB = "跟踪写属性";   
+            pUTF8 = G2U(pGB);
+			trace_write_list = new Fl_Browser(160, 265, 475, 80, pUTF8);  //_("Trace Write Properties")
             trace_write_list->type(2);
             trace_write_list->labelfont(1);
             trace_write_list->textsize(12);
@@ -1791,7 +2082,9 @@ ion of the graphics drivers should be used instead."));
             trace_write_list->align(Fl_Align(FL_ALIGN_TOP_LEFT));
           } // Fl_Browser* trace_write_list
           { Fl_Group* o = new Fl_Group(200, 355, 435, 25);
-            { trace_write_input = new Fl_Input(200, 355, 305, 25, _("Value:"));
+            { pGB = "价值";   
+              pUTF8 = G2U(pGB);
+			  trace_write_input = new Fl_Input(200, 355, 305, 25, pUTF8); //_("Value:")
               trace_write_input->labelsize(12);
               trace_write_input->textsize(12);
               trace_write_input->callback((Fl_Callback*)cb_trace_write_input);
@@ -1799,11 +2092,15 @@ ion of the graphics drivers should be used instead."));
               trace_write_input->deactivate();
               Fl_Group::current()->resizable(trace_write_input);
             } // Fl_Input* trace_write_input
-            { Fl_Button* o = new Fl_Button(510, 355, 70, 25, _("New"));
+            { pGB = "新建";   
+              pUTF8 = G2U(pGB);
+			  Fl_Button* o = new Fl_Button(510, 355, 70, 25,pUTF8 );  //_("New")
               o->labelsize(12);
               o->callback((Fl_Callback*)cb_New2);
             } // Fl_Button* o
-            { trace_write_delete = new Fl_Button(585, 355, 50, 25, _("Delete"));
+            { pGB = "删除";   
+              pUTF8 = G2U(pGB);
+			  trace_write_delete = new Fl_Button(585, 355, 50, 25,pUTF8 ); //_("Delete")
               trace_write_delete->labelsize(12);
               trace_write_delete->callback((Fl_Callback*)cb_trace_write_delete);
               trace_write_delete->deactivate();
@@ -1817,7 +2114,9 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Group* o
       page[11]->end();
     } // Fl_Group* page[11]
-    { page[12] = new Fl_Group(150, 0, 490, 430, _("Environment"));
+    { pGB = "环境";   
+      pUTF8 = G2U(pGB);
+	  page[12] = new Fl_Group(150, 0, 490, 430, pUTF8); //_("Environment")
       page[12]->labelfont(1);
       page[12]->labelsize(16);
       page[12]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -1831,16 +2130,22 @@ ion of the graphics drivers should be used instead."));
         env_list->textsize(12);
         env_list->callback((Fl_Callback*)cb_env_list);
       } // Fl_Browser* env_list
-      { Fl_Button* o = new Fl_Button(500, 185, 75, 25, _("New"));
+      { pGB = "新建";   
+       pUTF8 = G2U(pGB);
+		Fl_Button* o = new Fl_Button(500, 185, 75, 25, pUTF8); //_("New")
         o->labelsize(12);
         o->callback((Fl_Callback*)cb_New3);
       } // Fl_Button* o
-      { env_delete = new Fl_Button(580, 185, 55, 25, _("Delete"));
+      { pGB = "删除";   
+        pUTF8 = G2U(pGB);
+		env_delete = new Fl_Button(580, 185, 55, 25,pUTF8 ); //_("Delete")
         env_delete->labelsize(12);
         env_delete->callback((Fl_Callback*)cb_env_delete);
         env_delete->deactivate();
       } // Fl_Button* env_delete
-      { env_input = new Fl_Input(220, 185, 275, 25, _("Value:"));
+      { pGB = "价值";   
+        pUTF8 = G2U(pGB);
+		env_input = new Fl_Input(220, 185, 275, 25,pUTF8); //_("Value:")
         env_input->labelsize(12);
         env_input->textsize(12);
         env_input->callback((Fl_Callback*)cb_env_input);
@@ -1849,7 +2154,9 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Input* env_input
       page[12]->end();
     } // Fl_Group* page[12]
-    { page[13] = new Fl_Group(150, 0, 490, 440, _("Weather"));
+    { pGB = "天气";   
+      pUTF8 = G2U(pGB);
+	  page[13] = new Fl_Group(150, 0, 490, 440, pUTF8);  //_("Weather")
       page[13]->labelfont(1);
       page[13]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[13]->hide();
@@ -1857,7 +2164,9 @@ ion of the graphics drivers should be used instead."));
         o->box(FL_ENGRAVED_FRAME);
         o->labeltype(FL_NO_LABEL);
         o->align(Fl_Align(FL_ALIGN_TOP|FL_ALIGN_INSIDE));
-        { wind_dial = new Fl_Heading_Dial(205, 60, 130, 130, _("Wind Direction"));
+        { pGB = "风向";   
+          pUTF8 = G2U(pGB);
+		  wind_dial = new Fl_Heading_Dial(205, 60, 130, 130,pUTF8 ); //_("Wind Direction")
           wind_dial->type(1);
           wind_dial->box(FL_OVAL_BOX);
           wind_dial->color(FL_BACKGROUND_COLOR);
@@ -1870,7 +2179,9 @@ ion of the graphics drivers should be used instead."));
           wind_dial->align(Fl_Align(FL_ALIGN_TOP));
           wind_dial->when(FL_WHEN_CHANGED);
         } // Fl_Heading_Dial* wind_dial
-        { wind_hdg = new Fl_Value_Input(235, 200, 80, 25, _("Heading:"));
+        { pGB = "标题";   
+          pUTF8 = G2U(pGB);
+		  wind_hdg = new Fl_Value_Input(235, 200, 80, 25, pUTF8); //_("Heading:")
           wind_hdg->tooltip(_("Direction wind is coming from."));
           wind_hdg->labelsize(12);
           wind_hdg->maximum(360);
@@ -1878,32 +2189,42 @@ ion of the graphics drivers should be used instead."));
           wind_hdg->textsize(12);
           wind_hdg->callback((Fl_Callback*)cb_wind_hdg);
         } // Fl_Value_Input* wind_hdg
-        { wind_speed = new Fl_Value_Input(235, 245, 80, 25, _("Speed (kts):"));
+        { pGB = "速度(节)";   
+          pUTF8 = G2U(pGB);
+		  wind_speed = new Fl_Value_Input(235, 245, 80, 25,pUTF8 ); //_("Speed (kts):")
           wind_speed->tooltip(_("Wind speed (kts)"));
           wind_speed->labelsize(12);
           wind_speed->maximum(500);
           wind_speed->step(0.1);
           wind_speed->textsize(12);
         } // Fl_Value_Input* wind_speed
-        { random_wind = new Fl_Check_Button(235, 280, 105, 25, _("Random Winds"));
+        { pGB = "随机风";   
+          pUTF8 = G2U(pGB);
+		  random_wind = new Fl_Check_Button(235, 280, 105, 25, pUTF8 );  //_("Random Winds")
           random_wind->down_box(FL_DOWN_BOX);
           random_wind->labelsize(12);
           random_wind->callback((Fl_Callback*)cb_random_wind);
         } // Fl_Check_Button* random_wind
         o->end();
       } // Fl_Group* o
-      { turbulence = new Fl_Value_Slider(430, 35, 25, 275, _("Turbulence"));
+      { pGB = "动荡";   
+        pUTF8 = G2U(pGB);
+		turbulence = new Fl_Value_Slider(430, 35, 25, 275,pUTF8 ); //_("Turbulence")
         turbulence->tooltip(_("calm (0.0) to severe (1.0)"));
         turbulence->labelsize(12);
         turbulence->minimum(1);
         turbulence->maximum(0);
       } // Fl_Value_Slider* turbulence
-      { ceiling = new Fl_Input(235, 335, 80, 25, _("Ceiling:"));
+      { pGB = "上限";   
+        pUTF8 = G2U(pGB);
+		ceiling = new Fl_Input(235, 335, 80, 25, pUTF8);  //_("Ceiling:")
         ceiling->tooltip(_("FT_ASL[:THICKNESS_FT]"));
         ceiling->labelsize(12);
         ceiling->textsize(12);
       } // Fl_Input* ceiling
-      { fetch_real_weather = new Fl_Check_Button(235, 370, 155, 25, _("Fetch real weather"));
+      { pGB = "获取真正的天气";   
+        pUTF8 = G2U(pGB);
+		fetch_real_weather = new Fl_Check_Button(235, 370, 155, 25,pUTF8); //_("Fetch real weather")
         fetch_real_weather->down_box(FL_DOWN_BOX);
         fetch_real_weather->labelsize(12);
       } // Fl_Check_Button* fetch_real_weather
@@ -1912,11 +2233,15 @@ ion of the graphics drivers should be used instead."));
       } // Fl_Box* o
       page[13]->end();
     } // Fl_Group* page[13]
-    { page[14] = new Fl_Group(150, 0, 490, 440, _("Clouds"));
+    { pGB = "云";   
+      pUTF8 = G2U(pGB);
+	  page[14] = new Fl_Group(150, 0, 490, 440, pUTF8);  //_("Clouds")
       page[14]->labelfont(1);
       page[14]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
       page[14]->hide();
-      { cloud_layer_ = new Fl_Choice(255, 80, 120, 25, _("Layer:"));
+      { pGB = "阶层";   
+        pUTF8 = G2U(pGB);
+		cloud_layer_ = new Fl_Choice(255, 80, 120, 25,pUTF8 );  //_("Layer:")
         cloud_layer_->down_box(FL_BORDER_BOX);
         cloud_layer_->labelsize(12);
         cloud_layer_->textsize(12);
@@ -1930,27 +2255,35 @@ ion of the graphics drivers should be used instead."));
         }
         cloud_layer_->menu(menu_cloud_layer_);
       } // Fl_Choice* cloud_layer_
-      { cloud_elevation_ = new Fl_Value_Input(255, 110, 120, 25, _("Elevation(ft):"));
+      { pGB = "高度(英尺)";   
+        pUTF8 = G2U(pGB);
+		cloud_elevation_ = new Fl_Value_Input(255, 110, 120, 25,pUTF8);  //_("Elevation(ft):")
         cloud_elevation_->labelsize(12);
         cloud_elevation_->maximum(100000);
         cloud_elevation_->step(100);
         cloud_elevation_->textsize(12);
         cloud_elevation_->callback((Fl_Callback*)cb_cloud_elevation_);
       } // Fl_Value_Input* cloud_elevation_
-      { cloud_thickness_ = new Fl_Value_Input(255, 140, 120, 25, _("Thickness (ft):"));
+      { pGB = "厚度(英尺)";   
+        pUTF8 = G2U(pGB);
+		cloud_thickness_ = new Fl_Value_Input(255, 140, 120, 25,pUTF8);  //_("Thickness (ft):")
         cloud_thickness_->labelsize(12);
         cloud_thickness_->maximum(100000);
         cloud_thickness_->step(10);
         cloud_thickness_->textsize(12);
         cloud_thickness_->callback((Fl_Callback*)cb_cloud_thickness_);
       } // Fl_Value_Input* cloud_thickness_
-      { cloud_coverage_ = new Fl_Choice(255, 170, 120, 25, _("Coverage:"));
+      { pGB = "覆盖";   
+        pUTF8 = G2U(pGB);
+		cloud_coverage_ = new Fl_Choice(255, 170, 120, 25,pUTF8 );  //_("Coverage:")
         cloud_coverage_->down_box(FL_BORDER_BOX);
         cloud_coverage_->labelsize(12);
         cloud_coverage_->textsize(12);
         cloud_coverage_->callback((Fl_Callback*)cb_cloud_coverage_);
       } // Fl_Choice* cloud_coverage_
-      { cloud_span_ = new Fl_Value_Input(255, 200, 120, 25, _("Span (m):"));
+      { pGB = "跨度(m)";   
+        pUTF8 = G2U(pGB);
+		cloud_span_ = new Fl_Value_Input(255, 200, 120, 25,pUTF8 );  //_("Span (m):")
         cloud_span_->labelsize(12);
         cloud_span_->maximum(100000);
         cloud_span_->step(1);
@@ -1958,7 +2291,9 @@ ion of the graphics drivers should be used instead."));
         cloud_span_->callback((Fl_Callback*)cb_cloud_span_);
         cloud_span_->deactivate();
       } // Fl_Value_Input* cloud_span_
-      { cloud_transition_ = new Fl_Value_Input(255, 230, 120, 25, _("Transition (ft):"));
+      { pGB = "过渡(ft)";   
+        pUTF8 = G2U(pGB);
+		cloud_transition_ = new Fl_Value_Input(255, 230, 120, 25,  pUTF8); //_("Transition (ft):")
         cloud_transition_->labelsize(12);
         cloud_transition_->maximum(100000);
         cloud_transition_->step(1);

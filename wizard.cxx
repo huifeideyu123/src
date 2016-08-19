@@ -11,23 +11,16 @@
 #include "question.xpm"
 #include <iostream>
 #include <string>
+#include "advanced.h"
+#include <FL/Fl_Pixmap.H> //  
+#include <FL/Fl_Tiled_Image.H>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "F:\FlightGear0.5/fltk-1.3.3/test/pixmaps/tile.xpm"
 using namespace std;
 
-
-char* G2U(const char* gb2312)
-{
-int len = MultiByteToWideChar(CP_ACP, 0, gb2312, -1, NULL, 0);
-wchar_t* wstr = new wchar_t[len+1];
-memset(wstr, 0, len+1);
-MultiByteToWideChar(CP_ACP, 0, gb2312, -1, wstr, len);
-len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
-char* str = new char[len+1];
-memset(str, 0, len+1);
-WideCharToMultiByte(CP_UTF8, 0, wstr, -1, str, len, NULL, NULL);
-if(wstr) delete[] wstr;
-return str;
-}
-void Wizard::cb_fg_exe__i(Fl_Input*, void*) {
+void Wizard::cb_fg_exe__i(Fl_Input*, void*) {      
   fg_exe_update_cb();
 }
 void Wizard::cb_fg_exe_(Fl_Input* o, void* v) {
@@ -469,12 +462,73 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
     win = new Fl_Double_Window(800, 600, pUTF8);
     win->user_data((void*)(this));
     { wiz = new Fl_Wizard(0, 0, 800, 560);
-      { pGB = "选择路径";
+
+	  { pGB = "主界面";
 		pUTF8 = G2U(pGB);
-		page[0] = new Fl_Group(0, 0, 800, 560,pUTF8);
+		page[0] = new Fl_Group(5, 5, 800, 560,pUTF8);
         page[0]->labelfont(1);
         page[0]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         page[0]->hide();
+
+        { pGB = "开始训练";    //这里是假设的
+		  pUTF8 = G2U(pGB);
+         Fl_Button* Start_training  = new Fl_Button(50, 50, 70, 25, pUTF8);
+          //应该有一些回调函数 
+        } 
+        { pGB = "配置环境";
+		  pUTF8 = G2U(pGB);
+		  Fl_Button* fg_root_1 = new Fl_Button(50, 250, 70, 25, pUTF8);
+          //应该有一些回调函数
+        } 
+		{ pGB = "往期数据";
+		  pUTF8 = G2U(pGB);
+		  Fl_Button* fg_root_2 = new Fl_Button(50, 450, 70, 25, pUTF8);
+          //应该有一些回调函数
+        } 
+		{ Fl_Group* o = new Fl_Group(330, 80,100, 380);       //new一个group;
+		    o->box(FL_ENGRAVED_FRAME); 
+			{ pGB = "计划列表";
+			 pUTF8 = G2U(pGB);
+			 Fl_Button* o = new Fl_Button(340, 100, 70, 25, pUTF8);
+			//应该有一些回调函数
+			 } // Fl_Button* o
+			{ pGB = "训练计划";
+			  pUTF8 = G2U(pGB);
+			  Fl_Button* aircraft_dir_delete_1 = new Fl_Button(340, 200, 70, 25, pUTF8);
+			  //应该有一些回调函数
+			 } 
+
+			 { pGB = "飞行计划";
+			   pUTF8 = G2U(pGB);
+			   Fl_Button* o = new Fl_Button(340, 300, 70, 25, pUTF8);
+			  //应该有一些回调函数
+			  } 
+			 { pGB = "天气选择";
+			   pUTF8 = G2U(pGB);
+			   Fl_Button* scenery_dir_delete_1 = new Fl_Button(340, 400, 70, 25, pUTF8);
+			   //应该有一些回调函数
+			  } 
+			o->end();
+		}
+
+        { pGB = "自检状态";
+		  pUTF8 = G2U(pGB);
+		  Fl_Button* cache_delete_1 = new Fl_Button(630, 150, 60, 25,pUTF8);
+        } 
+		{ pGB = "提示";
+		  pUTF8 = G2U(pGB);
+		  Fl_Button* cache_delete_1 = new Fl_Button(630, 350, 60, 25,pUTF8);
+		  //......未完待续
+        } 
+        page[0]->end();
+      } // Fl_Group* page[0]    //这里是主界面
+      
+	{ pGB = "选择路径";
+		pUTF8 = G2U(pGB);
+		page[1] = new Fl_Group(0, 0, 800, 560,pUTF8);
+        page[1]->labelfont(1);
+        page[1]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+        page[1]->hide();
         { about_ = new Fl_Help_View(5, 25, 790, 130);
           about_->labeltype(FL_NO_LABEL);
         } // Fl_Help_View* about_
@@ -636,11 +690,12 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         } // Fl_Output* cache_file_
         page[0]->end();
       } // Fl_Group* page[0]
+
       { pGB = "选择一个飞机";
 		pUTF8 = G2U(pGB);
-		page[1] = new Fl_Group(0, 0, 800, 560,pUTF8);
-        page[1]->labelfont(1);
-        page[1]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+		page[2] = new Fl_Group(0, 0, 800, 560,pUTF8);
+        page[2]->labelfont(1);
+        page[2]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         { pGB = "3D 预览";
 		  pUTF8 = G2U(pGB);
 		  show_3d_preview = new Fl_Check_Button(780, 0, 17, 25,pUTF8);
@@ -719,48 +774,86 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           } // Fl_Output* aircraft_location
           o->end();
         } // Fl_Group* o
-        page[1]->end();
+        page[2]->end();  
       } // Fl_Group* page[1]
+
+
       { pGB = "训练计划";
 		pUTF8 = G2U(pGB);
 		page[2] = new Fl_Group(0, 0, 800, 560, pUTF8);
         page[2]->labelfont(1);
         page[2]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         page[2]->hide();
-        { pGB = "队形设置";
+        {
+		  pGB = "队形设置";
 		  pUTF8 = G2U(pGB);
-		  show_all_apt = new Fl_Round_Button(5, 20, 100, 15, pUTF8);
-          show_all_apt->tooltip(_("Display all airports"));
-          show_all_apt->type(102);
-          show_all_apt->down_box(FL_ROUND_DOWN_BOX);
-          show_all_apt->callback((Fl_Callback*)cb_show_all_apt);
-        } // Fl_Round_Button* show_all_apt
-        { pGB = "训练计划";
-		  pUTF8 = G2U(pGB);
-		  show_installed_apt = new Fl_Round_Button(5, 40, 100, 15,pUTF8);
-          show_installed_apt->tooltip(_("Display only installed airports"));
-          show_installed_apt->type(102);
-          show_installed_apt->down_box(FL_ROUND_DOWN_BOX);
-          show_installed_apt->value(1);
-          show_installed_apt->callback((Fl_Callback*)cb_show_installed_apt);
-        } // Fl_Round_Button* show_installed_apt
-        { airports_ = new AirportBrowser(5, 55, 790, 415);
-          airports_->box(FL_NO_BOX);
-          airports_->color(FL_BACKGROUND_COLOR);
-          airports_->selection_color(FL_BACKGROUND_COLOR);
-          airports_->labeltype(FL_NORMAL_LABEL);
-          airports_->labelfont(0);
-          airports_->labelsize(14);
-          airports_->labelcolor(FL_FOREGROUND_COLOR);
-          airports_->align(Fl_Align(FL_ALIGN_CENTER));
-          airports_->when(FL_WHEN_RELEASE);
-          Fl_Group::current()->resizable(airports_);
-        } // AirportBrowser* airports_
+		  Fl_Group* o = new Fl_Group(5, 20, 800,215 ,pUTF8 );
+		  //o->box(FL_ENGRAVED_FRAME);//显示边框
+		  o->labelfont(1);
+          o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+		  Fl_Browser *io_list = new Fl_Browser(5, 75, 600, 150);   //建立一个方框
+		 {
+		 pGB = "班次";
+		 pUTF8 = G2U(pGB);
+		 Fl_Group* o = new Fl_Group(5, 55, 80, 20,pUTF8 );
+		 o->labelfont(1);
+		 o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+		 o->end();
+		 }
+		 { pGB = "增加班次";
+		pUTF8 = G2U(pGB);
+		Fl_Button* prev0 = new Fl_Button(680,100, 100, 30, pUTF8);//_("Prev")
+		prev0->labelsize(12);
+		//回调函数。。。
+		 }
+		 { 	pGB = "删除班次";
+			pUTF8 = G2U(pGB);
+			Fl_Button* prev1 = new Fl_Button(680,140, 100, 30, pUTF8);//_("Prev")
+			prev1->labelsize(12);
+			//回调函数。。。
+		 }
+		  o->end();
+		}
+
+		{pGB = "设备安排";
+		 pUTF8 = G2U(pGB);
+		 Fl_Group* o = new Fl_Group(5,240, 800,230,pUTF8 );
+		 //o->box(FL_ENGRAVED_FRAME);
+		 o->labelfont(1);
+         o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+		 Fl_Browser *io_list = new Fl_Browser(5, 260, 600, 150);
+		{pGB = "增加人员";
+		 pUTF8 = G2U(pGB);
+		 Fl_Button* prev0 = new Fl_Button(250,430, 100, 30, pUTF8);
+		 prev0->labelsize(12);
+		}	
+		{pGB = "删除人员";
+		 pUTF8 = G2U(pGB);
+		 Fl_Button* prev1 = new Fl_Button(450,430, 100, 30, pUTF8);
+		 prev1->labelsize(12);
+		}
+		{pGB = "姓名:";
+		 pUTF8 = G2U(pGB);
+		 Fl_Input* name = new Fl_Input(650, 260, 60, 25,pUTF8);
+		}
+	 	{pGB = "年龄:";
+		 pUTF8 = G2U(pGB);
+		 Fl_Input* input_age = new Fl_Input(650, 300, 60, 25,pUTF8);
+		}
+		{pGB = "身高:";
+		 pUTF8 = G2U(pGB);
+		 Fl_Input* input_height = new Fl_Input(650, 350, 60, 25,pUTF8);
+		}
+		{pGB = "体重:";
+		 pUTF8 = G2U(pGB);
+		 Fl_Input* input_weight = new Fl_Input(650, 390, 60, 25,pUTF8);
+		}
+		o->end();
+	}
         { Fl_Group* o = new Fl_Group(5, 505, 790, 50);
           { pGB = "具体位置";
 		    pUTF8 = G2U(pGB);
-			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);
-			//carrier_group = new Fl_Group(5, 505, 635, 50, _("Carrier Ops"));  //翻译不太正确
+			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8); //_("Carrier Ops")
             carrier_group->box(FL_ENGRAVED_FRAME);
             carrier_group->labelfont(1);
             carrier_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -787,12 +880,20 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
 
 
 	  //page[21]
-	        { pGB = "选择一个位置";
-		pUTF8 = G2U(pGB);
+	   {pGB = "选择一个位置";
+		pUTF8 = G2U(pGB); 
 		page[21] = new Fl_Group(0, 0, 800, 560, pUTF8);
+		page[21]->image(new Fl_Tiled_Image(new Fl_Pixmap((const char * const *)tile_xpm)));  //这句是改变背景
         page[21]->labelfont(1);
         page[21]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         page[21]->hide();
+		{ pGB = "选择一个位置";
+		  pUTF8 = G2U(pGB);
+		  Fl_Group* o = new Fl_Group(0,0,100,25,pUTF8);
+		  o->labelfont(1);
+          o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+		  o->end();
+		}
         { pGB = "起飞机场";
 		  pUTF8 = G2U(pGB);
 		  show_all_apt = new Fl_Round_Button(5, 20, 100, 15, pUTF8);
@@ -825,8 +926,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         { Fl_Group* o = new Fl_Group(5, 505, 790, 50);
           { pGB = "具体位置";
 		    pUTF8 = G2U(pGB);
-			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);
-			//carrier_group = new Fl_Group(5, 505, 635, 50, _("Carrier Ops"));  //翻译不太正确
+			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);//_("Carrier Ops")
             carrier_group->box(FL_ENGRAVED_FRAME);
             carrier_group->labelfont(1);
             carrier_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -891,7 +991,6 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           { pGB = "具体位置";
 		    pUTF8 = G2U(pGB);
 			carrier_group = new Fl_Group(5, 505, 635, 50, pUTF8);
-			//carrier_group = new Fl_Group(5, 505, 635, 50, _("Carrier Ops"));  //翻译不太正确
             carrier_group->box(FL_ENGRAVED_FRAME);
             carrier_group->labelfont(1);
             carrier_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -925,13 +1024,18 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
 
 
 
-      { page[3] = new Fl_Group(0, 0, 800, 560);
+      { //page[3] = new Fl_Group(0, 0, 800, 560);
+	     pGB = "环境设置";
+		pUTF8 = G2U(pGB);
+		page[3] = new Fl_Group(0, 0, 800, 560, pUTF8);
+        page[3]->labelfont(1);
+        page[3]->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
         page[3]->hide();
+        //page[3]->hide();
         { Fl_Group* o = new Fl_Group(0, 525, 800, 25);
           { pGB = "高级";
 		    pUTF8 = G2U(pGB);
-			Fl_Button* o = new Fl_Button(685, 525, 110, 25,pUTF8);
-			//Fl_Button* o = new Fl_Button(685, 525, 110, 25, _("Advanced..."));
+			Fl_Button* o = new Fl_Button(685, 525, 110, 25,pUTF8);  //_("Advanced...")
             o->callback((Fl_Callback*)cb_Advanced);
           } // Fl_Button* o
           { Fl_Box* o = new Fl_Box(250, 525, 435, 25);
@@ -958,13 +1062,13 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
         } // Fl_Text_Display* text
         { pGB = "显示";
 		  pUTF8 = G2U(pGB);
-		  Fl_Group* o = new Fl_Group(5, 5, 790, 110, pUTF8);
-          o->box(FL_ENGRAVED_FRAME);
+		  Fl_Group* o = new Fl_Group(5, 25, 790, 110, pUTF8);
+		  o->box(FL_ENGRAVED_FRAME);  //显示边框
           o->labelfont(1);
           o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
           { pGB = "分辨率:";
 		    pUTF8 = G2U(pGB);
-			resolution = new Fl_Choice(100, 30, 125, 25, pUTF8);
+			resolution = new Fl_Choice(100, 50, 125, 25, pUTF8);
             resolution->tooltip(_("Window geometry, WxH"));
             resolution->down_box(FL_BORDER_BOX);
             resolution->callback((Fl_Callback*)cb_resolution);
@@ -980,7 +1084,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           { 
 			   pGB = "全屏";
 		    pUTF8 = G2U(pGB);
-			  game_mode = new Fl_Check_Button(25, 85, 210, 25, pUTF8);
+			  game_mode = new Fl_Check_Button(25, 105, 210, 25, pUTF8);
             game_mode->down_box(FL_DOWN_BOX);
             game_mode->callback((Fl_Callback*)cb_game_mode);
           } // Fl_Check_Button* game_mode
@@ -1001,38 +1105,37 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           } // Fl_Check_Button* enhanced_lighting
           { pGB = "高光";
 		    pUTF8 = G2U(pGB);
-			specular_highlight = new Fl_Check_Button(250, 60, 205, 25, pUTF8);
+			specular_highlight = new Fl_Check_Button(470, 60, 205, 25, pUTF8);
 			//specular_highlight = new Fl_Check_Button(250, 60, 205, 25, _("Specular highlight"));
             specular_highlight->down_box(FL_DOWN_BOX);
             specular_highlight->callback((Fl_Callback*)cb_specular_highlight);
           } // Fl_Check_Button* specular_highlight
           { pGB = "帧速率限制器:";
 		    pUTF8 = G2U(pGB);
-			frame_rate_limiter = new Fl_Check_Button(250, 85, 205, 25, pUTF8);
+			frame_rate_limiter = new Fl_Check_Button(470, 85, 205, 25, pUTF8);
             frame_rate_limiter->tooltip(_("Too much framerate hurts the smoothness of the simulation"));
             frame_rate_limiter->down_box(FL_DOWN_BOX);
             frame_rate_limiter->callback((Fl_Callback*)cb_frame_rate_limiter);
           } // Fl_Check_Button* frame_rate_limiter
-          { frame_rate_limiter_value = new Fl_Value_Input(455, 85, 55, 25);
+          { frame_rate_limiter_value = new Fl_Value_Input(670, 85, 55, 25);
             frame_rate_limiter_value->minimum(30);
             frame_rate_limiter_value->maximum(100);
             frame_rate_limiter_value->step(1);
             frame_rate_limiter_value->callback((Fl_Callback*)cb_frame_rate_limiter_value);
           } // Fl_Value_Input* frame_rate_limiter_value
-          { Fl_Box* o = new Fl_Box(610, 80, 25, 10);
+          { Fl_Box* o = new Fl_Box(610, 100, 25, 10);
             Fl_Group::current()->resizable(o);
           } // Fl_Box* o
           { pGB = "三维云";
 		    pUTF8 = G2U(pGB);
-			clouds_3d = new Fl_Check_Button(470, 10, 205, 25,  pUTF8);
+			clouds_3d = new Fl_Check_Button(470, 30, 205, 25,  pUTF8);
 			//clouds_3d = new Fl_Check_Button(470, 10, 205, 25, _("3D Clouds"));
             clouds_3d->down_box(FL_DOWN_BOX);
             clouds_3d->callback((Fl_Callback*)cb_clouds_3d);
           } // Fl_Check_Button* clouds_3d
           { pGB = "帧率 :";
 		    pUTF8 = G2U(pGB);
-			bpp = new Fl_Choice(100, 55, 125, 25,pUTF8);
-			//bpp = new Fl_Choice(100, 55, 125, 25, _("bpp :"));  不知道怎么翻译
+			bpp = new Fl_Choice(100, 75, 125, 25,pUTF8);
             bpp->tooltip(_("Color depth (bits per pixel)"));
             bpp->down_box(FL_BORDER_BOX);
             bpp->callback((Fl_Callback*)cb_bpp);
@@ -1047,22 +1150,22 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           } // Fl_Choice* bpp
           o->end();
         } // Fl_Group* o
-        { Fl_Group* o = new Fl_Group(5, 120, 790, 180);
+        { Fl_Group* o = new Fl_Group(5, 140, 790, 180);
           { pGB = "特性";
 		    pUTF8 = G2U(pGB);
-			Fl_Group* o = new Fl_Group(5, 120, 480, 180,pUTF8);
+			Fl_Group* o = new Fl_Group(5, 140, 480, 180,pUTF8);
             o->box(FL_ENGRAVED_FRAME);
             o->labelfont(1);
             o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
             { pGB = "随机建筑物";
 		      pUTF8 = G2U(pGB);
-			  random_objects = new Fl_Check_Button(25, 135, 150, 25,pUTF8);
+			  random_objects = new Fl_Check_Button(25, 155, 150, 25,pUTF8);
               random_objects->down_box(FL_DOWN_BOX);
               random_objects->callback((Fl_Callback*)cb_random_objects);
             } // Fl_Check_Button* random_objects
             { pGB = "随机树木";
 		      pUTF8 = G2U(pGB);
-			  random_trees = new Fl_Check_Button(25, 160, 150, 25,pUTF8);
+			  random_trees = new Fl_Check_Button(25, 180, 150, 25,pUTF8);
 			  //random_trees = new Fl_Check_Button(25, 160, 150, 25, _("Random trees"));
               random_trees->down_box(FL_DOWN_BOX);
               random_trees->callback((Fl_Callback*)cb_random_trees);
@@ -1084,7 +1187,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             { 
 				pGB = "自动驾驶";
 		      pUTF8 = G2U(pGB);
-			  ai_traffic = new Fl_Check_Button(25, 235, 140, 25,pUTF8);
+			  ai_traffic = new Fl_Check_Button(25, 255, 140, 25,pUTF8);
               ai_traffic->down_box(FL_DOWN_BOX);
               ai_traffic->callback((Fl_Callback*)cb_ai_traffic);
             } // Fl_Check_Button* ai_traffic
@@ -1097,17 +1200,17 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             } // Fl_Check_Button* terrasync
             { pGB = "每天的时间:";
 		      pUTF8 = G2U(pGB);
-			  time_of_day = new Fl_Check_Button(180, 135, 160, 25, pUTF8);//_("Time of day :")
+			  time_of_day = new Fl_Check_Button(180, 155, 160, 25, pUTF8);//_("Time of day :")
               time_of_day->down_box(FL_DOWN_BOX);
               time_of_day->callback((Fl_Callback*)cb_time_of_day);
             } // Fl_Check_Button* time_of_day
-            { time_of_day_value = new Fl_Choice(345, 135, 120, 25);
+            { time_of_day_value = new Fl_Choice(345, 155, 120, 25);
               time_of_day_value->down_box(FL_BORDER_BOX);
               time_of_day_value->callback((Fl_Callback*)cb_time_of_day_value);
             } // Fl_Choice* time_of_day_value
             { pGB = "获取实际天气";
 		      pUTF8 = G2U(pGB);
-			  real_weather_fetch = new Fl_Check_Button(180, 185, 160, 25,pUTF8);//_("Real weather fetch")
+			  real_weather_fetch = new Fl_Check_Button(180, 2055, 160, 25,pUTF8);//_("Real weather fetch")
               real_weather_fetch->down_box(FL_DOWN_BOX);
               real_weather_fetch->callback((Fl_Callback*)cb_real_weather_fetch);
             } // Fl_Check_Button* real_weather_fetch
@@ -1120,16 +1223,16 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
             } // Fl_Check_Button* auto_coordination
             { pGB = "季节:";
 		      pUTF8 = G2U(pGB);
-			  season = new Fl_Choice(345, 160, 120, 25, pUTF8);//_("Season :")
+			  season = new Fl_Choice(345, 180, 120, 25, pUTF8);//_("Season :")
               season->down_box(FL_BORDER_BOX);
               season->callback((Fl_Callback*)cb_season);
             } // Fl_Choice* season
-            { Fl_Box* o = new Fl_Box(445, 205, 20, 10);
+            { Fl_Box* o = new Fl_Box(445, 225, 20, 10);
               Fl_Group::current()->resizable(o);
             } // Fl_Box* o
             { pGB = "菜单-自动可见";
 		      pUTF8 = G2U(pGB);
-			  auto_visibility = new Fl_Check_Button(180, 235, 170, 25, pUTF8);//_("Menu auto-visibility")
+			  auto_visibility = new Fl_Check_Button(180, 255, 170, 25, pUTF8);//_("Menu auto-visibility")
               auto_visibility->down_box(FL_DOWN_BOX);
               auto_visibility->callback((Fl_Callback*)cb_auto_visibility);
             } // Fl_Check_Button* auto_visibility
@@ -1137,26 +1240,26 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           } // Fl_Group* o
           { pGB = "场景";
 		    pUTF8 = G2U(pGB);
-			Fl_Group* o = new Fl_Group(490, 120, 305, 174,pUTF8);//_("Scenarios")
+			Fl_Group* o = new Fl_Group(490, 140, 305, 174,pUTF8);//_("Scenarios")
             o->box(FL_ENGRAVED_FRAME);
             o->labelfont(1);
             o->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
-            { scenarii = new Fl_Browser(495, 136, 295, 123);
+            { scenarii = new Fl_Browser(495, 156, 295, 123);
               scenarii->tooltip(_("Ctrl-click to select or deselect a single item"));
               scenarii->type(3);
               scenarii->callback((Fl_Callback*)cb_scenarii);
               scenarii->align(Fl_Align(FL_ALIGN_TOP_LEFT));
               Fl_Group::current()->resizable(scenarii);
             } // Fl_Browser* scenarii
-            { Fl_Group* o = new Fl_Group(495, 265, 295, 25);
+            { Fl_Group* o = new Fl_Group(495, 285, 295, 25);
               {  pGB = "取消全选";
 		         pUTF8 = G2U(pGB);
-				 Fl_Button* o = new Fl_Button(495, 265, 265, 25, pUTF8);//_("Deselect all")
+				 Fl_Button* o = new Fl_Button(495, 285, 265, 25, pUTF8);//_("Deselect all")
                 o->tooltip(_("Ctrl-click to deselect a single item"));
                 o->callback((Fl_Callback*)cb_Deselect);
                 Fl_Group::current()->resizable(o);
               } // Fl_Button* o
-              { Fl_Box* o = scenarii_help = new Fl_Box(765, 265, 25, 25);
+              { Fl_Box* o = scenarii_help = new Fl_Box(765, 285, 25, 25);
                 o->image(question_pixmap);
               } // Fl_Box* scenarii_help
               o->end();
@@ -1166,28 +1269,28 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           } // Fl_Group* o
           o->end();
         } // Fl_Group* o
-        { Fl_Group* o = new Fl_Group(5, 305, 790, 60);
-          { atlas_group = new Fl_Group(5, 305, 245, 60);
+        { Fl_Group* o = new Fl_Group(5, 325, 790, 60);
+          { atlas_group = new Fl_Group(5, 325, 245, 60);
             atlas_group->box(FL_ENGRAVED_FRAME);
             atlas_group->labeltype(FL_SHADOW_LABEL);
             atlas_group->labelfont(1);
             atlas_group->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
             { pGB = "地图";
 		      pUTF8 = G2U(pGB);
-			  atlas = new Fl_Check_Button(10, 310, 70, 25, pUTF8);//_("Atlas")
+			  atlas = new Fl_Check_Button(10, 330, 70, 25, pUTF8);//_("Atlas")
               atlas->down_box(FL_DOWN_BOX);
               atlas->labelfont(1);
               atlas->callback((Fl_Callback*)cb_atlas);
             } // Fl_Check_Button* atlas
             { pGB = "主机名:";
 		      pUTF8 = G2U(pGB);
-			  atlas_host = new Fl_Input(95, 335, 85, 25, pUTF8);//_("Hostname :")
+			  atlas_host = new Fl_Input(95, 355, 85, 25, pUTF8);//_("Hostname :")
               atlas_host->tooltip(_("Hostname"));
               atlas_host->callback((Fl_Callback*)cb_atlas_host);
               atlas_host->when(FL_WHEN_CHANGED);
               Fl_Group::current()->resizable(atlas_host);
             } // Fl_Input* atlas_host
-            { atlas_port = new Fl_Value_Input(190, 335, 50, 25, _(":"));
+            { atlas_port = new Fl_Value_Input(190, 355, 50, 25, _(":"));
               atlas_port->callback((Fl_Callback*)cb_atlas_port);
             } // Fl_Value_Input* atlas_port
             atlas_group->end();
@@ -1238,7 +1341,7 @@ Wizard::Wizard() : prefs( Fl_Preferences::USER, "flightgear.org", "fgrun" ), sys
           } // Fl_Group* multiplay_group
           o->end();
         } // Fl_Group* o
-        { Fl_Box* o = new Fl_Box(245, 370, 280, 145);
+        { Fl_Box* o = new Fl_Box(245, 390, 280, 145);
           Fl_Group::current()->resizable(o);
         } // Fl_Box* o
         page[3]->end();
@@ -1288,7 +1391,7 @@ S don\'t start anymore."));
         o->labelsize(12);
         o->callback((Fl_Callback*)cb_Save);
       } // Fl_Button* o
-      { pGB = "负载";
+      { pGB = "加载";
 		pUTF8 = G2U(pGB);
 		Fl_Button* o = new Fl_Button(175, 570, 120, 25, pUTF8);//_("Load")
         o->tooltip(_("Load a previously saved configuration"));
